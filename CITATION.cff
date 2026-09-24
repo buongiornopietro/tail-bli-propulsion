@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+title: "Optimal streamlined bodies and tail-mounted boundary-layer-ingesting propulsion: code and data"
+authors:
+  - family-names: Buongiorno
+    given-names: Pietro
+license: MIT
+repository-code: "https://github.com/buongiornopietro/tail-bli-propulsion"
+keywords:
+  - boundary-layer ingestion
+  - streamlined body
+  - drag
+  - RANS
+  - OpenFOAM

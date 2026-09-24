@@ -1,0 +1,16 @@
+Re1e+07_forzata_seme3 K=0.00: BLI 0.01656 vs conv 0.02027 (-18.3%) L/D 4.8 fessura 0.88 Q/Q_BL 3.1
+Re1e+07_forzata_seme2 K=0.00: BLI 0.01659 vs conv 0.02027 (-18.2%) L/D 5.1 fessura 0.92 Q/Q_BL 1.0
+Re1e+07_forzata_seme1 K=0.00: BLI 0.01656 vs conv 0.02027 (-18.3%) L/D 4.8 fessura 0.91 Q/Q_BL 1.2
+Re1e+07_forzata_seme3 K=0.05: BLI 0.01990 vs conv 0.02027 (-1.8%) L/D 4.5 fessura 0.93 Q/Q_BL 0.7
+Re1e+07_forzata_seme2 K=0.05: BLI 0.01992 vs conv 0.02027 (-1.7%) L/D 4.5 fessura 0.93 Q/Q_BL 0.7
+Re1e+07_forzata_seme1 K=0.05: BLI 0.01992 vs conv 0.02027 (-1.7%) L/D 4.5 fessura 0.93 Q/Q_BL 0.7
+Re1e+07_forzata_seme3 K=0.10: BLI 0.02198 vs conv 0.02027 (+8.4%) L/D 4.8 fessura 0.94 Q/Q_BL 0.4
+Re1e+07_forzata_seme2 K=0.10: BLI 0.02198 vs conv 0.02027 (+8.4%) L/D 4.8 fessura 0.94 Q/Q_BL 0.4
+Re1e+07_forzata_seme1 K=0.10: BLI 0.02201 vs conv 0.02027 (+8.6%) L/D 4.9 fessura 0.94 Q/Q_BL 0.4
+Re1e+07_forzata_seme3 K=0.20: BLI 0.02469 vs conv 0.02027 (+21.8%) L/D 5.2 fessura 0.94 Q/Q_BL 0.3
+*** Re1e+07_forzata_seme3: soglia K* = 0.05881063698925879  (4176s)
+Re1e+07_forzata_seme2 K=0.20: BLI 0.02472 vs conv 0.02027 (+21.9%) L/D 5.2 fessura 0.94 Q/Q_BL 0.3
+*** Re1e+07_forzata_seme2: soglia K* = 0.058487578174941664  (4192s)
+Re1e+07_forzata_seme1 K=0.20: BLI 0.02468 vs conv 0.02027 (+21.8%) L/D 5.2 fessura 0.94 Q/Q_BL 0.3
+*** Re1e+07_forzata_seme1: soglia K* = 0.058284408367849774  (4223s)
+RIPETIZIONI: [5.83, 5.85, 5.88]

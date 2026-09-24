@@ -1,0 +1,93 @@
+{
+ "casi": [
+  {
+   "caso": "disco libero (R=0.03)",
+   "A": 0.002789592432660478,
+   "CT_riferimento": 0.35914407720288555,
+   "fattore": 1.0829116736699664,
+   "P": 6.38472887174676e-06,
+   "P_ideale": 6.9574e-06,
+   "P_pari": 7.534249678391424e-06,
+   "variazione_ideale": -8.231108291218558,
+   "variazione_pari": -15.257269877072732
+  },
+  {
+   "caso": "presa intubata con labbro",
+   "A": 0.0019356836814823114,
+   "CT_riferimento": 0.5175771277013553,
+   "fattore": 1.1159499021230044,
+   "P": 7.59837896200795e-06,
+   "P_ideale": 6.9574e-06,
+   "P_pari": 7.76410984903059e-06,
+   "variazione_ideale": 9.212909449046336,
+   "variazione_pari": -2.1345767930284087
+  },
+  {
+   "caso": "disco libero (fine)",
+   "A": 0.002789592432660478,
+   "CT_riferimento": 0.35992612692974096,
+   "fattore": 1.083079352860685,
+   "P": 6.40753037658594e-06,
+   "P_ideale": 6.97255e-06,
+   "P_pari": 7.551824941788769e-06,
+   "variazione_ideale": -8.103486148024174,
+   "variazione_pari": -15.152556819355834
+  },
+  {
+   "caso": "presa intubata (fine)",
+   "A": 0.0019356836814823114,
+   "CT_riferimento": 0.5187041713505167,
+   "fattore": 1.1161785803138804,
+   "P": 7.672213473282e-06,
+   "P_ideale": 6.97255e-06,
+   "P_pari": 7.782610960167546e-06,
+   "variazione_ideale": 10.034542216004194,
+   "variazione_pari": -1.418514781871727
+  }
+ ],
+ "sensibilita": [
+  {
+   "riferimento": "area ventilatore intubato",
+   "A": 0.0019356836814823114,
+   "fattore": 1.1159499021230044,
+   "disco_libero": -17.76611877092461,
+   "presa_intubata": -2.1345767930284087
+  },
+  {
+   "riferimento": "area disco libero",
+   "A": 0.002789592432660478,
+   "fattore": 1.0829116736699664,
+   "disco_libero": -15.257269877072732,
+   "presa_intubata": 0.8511701410752526
+  },
+  {
+   "riferimento": "2 x area disco libero",
+   "A": 0.005579184865320956,
+   "fattore": 1.0430405230278499,
+   "disco_libero": -12.017903731693124,
+   "presa_intubata": 4.706295717074727
+  },
+  {
+   "riferimento": "met\u00e0 sezione frontale",
+   "A": 0.009372607352386377,
+   "fattore": 1.0260448994055977,
+   "disco_libero": -10.560549775215044,
+   "presa_intubata": 6.44067283246077
+  },
+  {
+   "riferimento": "sezione frontale del corpo",
+   "A": 0.018745214704772754,
+   "fattore": 1.0131877025955733,
+   "disco_libero": -9.425576846532103,
+   "presa_intubata": 7.791388672864752
+  },
+  {
+   "riferimento": "infinita (ideale)",
+   "A": null,
+   "fattore": 1.0,
+   "disco_libero": -8.231108291218558,
+   "presa_intubata": 9.212909449046336
+  }
+ ],
+ "A_frontale": 0.018745214704772754
+}

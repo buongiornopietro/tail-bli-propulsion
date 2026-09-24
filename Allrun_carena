@@ -1,0 +1,60 @@
+#!/bin/bash
+# Propulsore intubato: 1) avvio robusto (upwind) con spinta fissa, 2) secondo ordine,
+# 3) ciclo di autopropulsione (spinta = resistenza di corpo + carenatura)
+cd "$1"; . /opt/openfoam14/etc/bashrc
+NP=${NP:-4}
+fd() { foamDictionary "$1" -entry "$2" -set "$3" > /dev/null; }
+esegui() {   # $1 = iterazioni aggiuntive, $2 = etichetta
+    [ "$1" -gt 0 ] || return 0
+    t0=$(foamListTimes -processor -latestTime 2>/dev/null | tail -1); t0=${t0:-0}
+    fd system/controlDict endTime $((t0 + $1)); fd system/controlDict writeInterval 400
+    mpirun --allow-run-as-root --oversubscribe -np $NP foamRun -parallel > log.run.$2 2>&1
+}
+if [ ! -d processor0 ]; then
+    rm -rf postProcessing log.*
+    blockMesh > log.blockMesh 2>&1; checkMesh > log.checkMesh 2>&1 || true
+    fd system/fvSchemes 'divSchemes/div(phi,U)' 'bounded Gauss upwind'
+    fd system/fvSchemes 'divSchemes/div(phi,k)' 'bounded Gauss upwind'
+    fd system/fvSchemes 'divSchemes/div(phi,omega)' 'bounded Gauss upwind'
+    fd system/fvSchemes 'laplacianSchemes/default' 'Gauss linear limited 0.33'
+    fd system/fvSchemes 'snGradSchemes/default' 'limited 0.33'
+    fd system/fvSchemes 'gradSchemes/default' 'cellLimited Gauss linear 1'
+    fd system/fvSolution 'SIMPLE/consistent' 'no'
+    fd system/fvSolution 'SIMPLE/nNonOrthogonalCorrectors' '2'
+    fd system/fvSolution 'solvers/p' '{ solver GAMG; smoother DICGaussSeidel; tolerance 1e-9; relTol 0.05; minIter 2; maxIter 100; nCellsInCoarsestLevel 50; }'
+    fd system/fvSolution 'relaxationFactors/equations' '{ U 0.4; ".*" 0.3; }'
+    fd system/fvSolution 'relaxationFactors/fields' '{ p 0.2; }'
+    fd system/controlDict purgeWrite 0
+    fd system/controlDict writeFormat binary
+    cat > system/decomposeParDict <<EOD
+FoamFile { format ascii; class dictionary; object decomposeParDict; }
+numberOfSubdomains $NP;
+decomposer scotch;
+EOD
+    decomposePar > log.decompose 2>&1
+    esegui ${IT1:-1000} 1
+fi
+if [ ! -f fase2.fatta ]; then
+    esegui ${ITU:-0} 1b
+    fd system/fvSchemes 'divSchemes/div(phi,U)' 'bounded Gauss linearUpwind grad(U)'
+    fd system/fvSchemes 'divSchemes/div(phi,k)' 'bounded Gauss limitedLinear 1'
+    fd system/fvSchemes 'divSchemes/div(phi,omega)' 'bounded Gauss limitedLinear 1'
+    esegui ${IT2:-2000} 2
+    touch fase2.fatta
+fi
+for it in $(seq 1 ${NAUTO:-3}); do
+    fc=$(ls -d postProcessing/forze/* | sort -t/ -k3 -n | tail -1)/forceCoeffs.dat
+    Cd=$(tail -1 $fc | awk '{print $3}')
+    T=$(awk -v c=$Cd 'BEGIN{printf "%.6e", 0.5*c}')
+    fd constant/fvModels disco/sources/U/explicit "($T 0 0)"
+    for p in processor*; do cp constant/fvModels $p/constant/ 2>/dev/null; done
+    esegui ${IT3:-800} auto$it
+    ud=$(ls -d postProcessing/Udisco/* | sort -t/ -k3 -n | tail -1)/volFieldValue.dat
+    Ux=$(tail -1 $ud | tr -d "()" | awk '{print $2}')
+    Cd=$(tail -1 $(ls -d postProcessing/forze/* | sort -t/ -k3 -n | tail -1)/forceCoeffs.dat | awk '{print $3}')
+    echo "iter $it: spinta T=$T  resistenza (corpo+carena) D=$(awk -v c=$Cd 'BEGIN{printf "%.6e", 0.5*c}')  <Ux>disco=$Ux" | tee -a autopropulsione.txt
+done
+reconstructPar -latestTime > log.reconstruct 2>&1
+foamPostProcess -func writeCellCentres -latestTime > log.cc 2>&1
+foamPostProcess -func 'totalPressureIncompressible' -latestTime > /dev/null 2>&1 || true
+echo FINE >> autopropulsione.txt

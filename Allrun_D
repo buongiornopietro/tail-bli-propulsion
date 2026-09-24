@@ -1,0 +1,29 @@
+#!/bin/bash
+# caso intubato da zero: turbolenza di fondo + innesco, spinta fissa, poi autopropulsione
+. /opt/openfoam14/etc/bashrc
+export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+fd() { foamDictionary "$1" -entry "$2" -set "$3" > /dev/null; }
+caso=$1; src=$2
+rm -rf ~/cfd/$caso; cp -r $src ~/cfd/$caso; cd ~/cfd/$caso
+blockMesh > log.blockMesh 2>&1; checkMesh > log.checkMesh 2>&1
+grep -E "non-orth|Number of severely|Failed|OK\." log.checkMesh | tail -4
+OM=${OMEGA:-1.5}
+fd 0/omega internalField "uniform $OM"
+fd 0/omega boundaryField/esterno/inletValue "uniform $OM"
+fd 0/omega boundaryField/esterno/value "uniform $OM"
+cat > system/setFieldsDict <<EOD
+FoamFile { format ascii; class dictionary; object setFieldsDict; }
+defaultValues { }
+zones { innesco { type box; box (0.03 -0.1 -0.1) (${XTRIP:-0.08} 0.065 0.1); values { k 0.005; omega 100; } } }
+EOD
+setFields > log.setFields 2>&1
+fd system/fvSolution 'solvers/p' '{ solver GAMG; smoother DICGaussSeidel; tolerance 1e-9; relTol 0.05; minIter 2; maxIter 100; }'
+fd system/fvSolution relaxationFactors/equations '{ U 0.6; ".*" 0.6; }'
+fd system/controlDict writeFormat ascii
+cat > system/decomposeParDict <<EOD
+FoamFile { format ascii; class dictionary; object decomposeParDict; }
+numberOfSubdomains 4;
+decomposer scotch;
+EOD
+decomposePar > log.decompose 2>&1
+cd ~/cfd && ITC=${ITC:-2400} IT3=${IT3:-800} NAUTO=${NAUTO:-3} ./Allrun_std $caso

@@ -1,0 +1,72 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Version:  14
+    \\  /    A nd           |
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+solver          incompressibleFluid;
+startFrom       latestTime;
+startTime       0;
+stopAt          endTime;
+endTime         4000;
+deltaT          1;
+writeControl    timeStep;
+writeInterval   500;
+purgeWrite      2;
+writeFormat     binary;
+writePrecision  8;
+timeFormat      general;
+runTimeModifiable true;
+
+functions
+{
+    forze
+    {
+        type            forceCoeffs;
+        libs            ("libforces.so");
+        writeControl    timeStep;
+        writeInterval   10;
+        patches         (corpo);
+        rho             rhoInf;
+        rhoInf          1;
+        CofR            (0 0 0);
+        liftDir         (0 1 0);
+        dragDir         (1 0 0);
+        pitchAxis       (0 0 1);
+        magUInf         1;
+        lRef            1;
+        Aref            1;
+    }
+
+        Udisco
+        {
+            type            volFieldValue;
+            libs            ("libfieldFunctionObjects.so");
+            writeControl    timeStep;
+            writeInterval   10;
+            writeFields     false;
+            cellZone
+        {
+            type            cylinder;
+            point1          (0.895 0 0);
+            point2          (0.905 0 0);
+            radius          0.03;
+        }
+            operation       volAverage;
+            fields          (U);
+        }
+
+    yPlus { type yPlus; libs ("libfieldFunctionObjects.so"); writeControl writeTime; }
+    wallShearStress { type wallShearStress; libs ("libfieldFunctionObjects.so"); patches (corpo); writeControl writeTime; }
+}

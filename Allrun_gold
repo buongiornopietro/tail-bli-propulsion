@@ -1,0 +1,39 @@
+#!/bin/bash
+# Esecuzione robusta di un caso "alla Goldschmied":
+#   griglia -> 1500 iterazioni al primo ordine -> 1500 al secondo ordine
+# uso: Allrun_gold <cartella_caso>
+set -e
+cd "$1"
+. /opt/openfoam14/etc/bashrc
+rm -rf postProcessing [1-9]* log.*
+blockMesh > log.blockMesh 2>&1
+checkMesh > log.checkMesh 2>&1 || true
+
+fd() { foamDictionary "$1" -entry "$2" -set "$3" > /dev/null; }
+fd system/fvSchemes 'divSchemes/div(phi,U)' 'bounded Gauss upwind'
+fd system/fvSchemes 'divSchemes/div(phi,k)' 'bounded Gauss upwind'
+fd system/fvSchemes 'divSchemes/div(phi,omega)' 'bounded Gauss upwind'
+fd system/fvSchemes 'laplacianSchemes/default' 'Gauss linear limited 0.5'
+fd system/fvSchemes 'snGradSchemes/default' 'limited 0.5'
+fd system/fvSchemes 'gradSchemes/default' 'cellLimited Gauss linear 1'
+fd system/fvSolution 'SIMPLE/consistent' 'no'
+fd system/fvSolution 'SIMPLE/nNonOrthogonalCorrectors' '2'
+fd system/fvSolution 'relaxationFactors/equations' '{ U 0.7; ".*" 0.5; }'
+fd system/fvSolution 'relaxationFactors/fields' '{ p 0.3; }'
+fd system/controlDict 'writeFormat' 'ascii'
+fd system/controlDict 'endTime' '1500'
+fd system/controlDict 'writeInterval' '1500'
+foamRun > log.run1 2>&1
+
+fd system/fvSchemes 'divSchemes/div(phi,U)' 'bounded Gauss linearUpwind grad(U)'
+fd system/fvSchemes 'divSchemes/div(phi,k)' 'bounded Gauss limitedLinear 1'
+fd system/fvSchemes 'divSchemes/div(phi,omega)' 'bounded Gauss limitedLinear 1'
+fd system/controlDict 'endTime' '3000'
+foamRun > log.run2 2>&1
+foamPostProcess -func writeCellCentres -latestTime > log.cc 2>&1
+
+ultimo() { ls -d postProcessing/"$1"/* | sort -t/ -k3 -n | tail -1; }
+echo "forze: $(tail -1 "$(ultimo forze)"/forceCoeffs.dat)"
+for d in bil_presa bil_scarico Q_presa Q_scarico; do
+    echo "$d: $(tail -1 "$(ultimo $d)"/surfaceFieldValue.dat)"
+done

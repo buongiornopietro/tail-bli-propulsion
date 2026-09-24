@@ -1,0 +1,3 @@
+iter 1: spinta T=7.1311e-06  resistenza corpo D=7.170908e-06  <Ux>disco=8.89768215e-01
+iter 2: spinta T=7.170908e-06  resistenza corpo D=7.171933e-06  <Ux>disco=8.90365470e-01
+FINE

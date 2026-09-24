@@ -1,0 +1,32 @@
+Verifica di griglia (fattore 1.41 per direzione), 2026-09-24
+conv_fine (corpo nudo): D per cuneo a 2400 it = 6.97255e-06, ancora in lieve discesa
+  (-6.8e-9, -3.6e-9 ogni 200 it) -> asintoto stimato 6.968-6.970e-06
+  base conv_ref (convergito, 2000 it) = 6.95742e-06
+  differenza fine/base = +0.2% (+0.15..+0.18% sull'asintoto)
+disco_fine (disco libero, autopropulsione, 3 iterazioni): T=7.17819e-06, <u>disco=0.89264
+  P = 6.4075e-06 ; P/P_conv - 1 = -8.10% (con D_nudo fine 6.97255e-06) / -8.06% (asintoto 6.969e-06)
+  base: -8.23%  -> differenza circa 0.15 punti
+carena_fine (presa intubata, prima prova): NON VALIDO.
+  La turbolenza si spegne sul corpo da x~0.5 (nut vicino a parete 3e-6 invece di 3-5e-5),
+  lo strato limite laminare si stacca tra x=0.54 e 0.70 (u fino a -0.74 U). D finale 4.71e-06, non convergito.
+  Stesse impostazioni di carena_D: la soluzione dipende dalla storia iniziale (trappola "laminare spurio").
+  Rimedi in corso/possibili: Allrun_fini2 (altra sessione: omega 0.3, innesco fino a x=0.15);
+  Allrun_mappa (questa sessione, caso carena_fine3: parte dalla soluzione turbolenta di carena_D).
+Seconda prova (Allrun_fini2, altra sessione: omega_inf 0.3, innesco k/omega fino a x=0.15):
+  conv_fine2 (corpo nudo): NON VALIDO, laminare spurio (nut ~5e-7 da x=0.25), D=3.74e-06 a 2400 it, non convergito.
+  carena_fine2 (presa intubata): turbolento, profilo di nut lungo il corpo come carena_D
+    (3.1e-6 a x=0.05 ... 5.6e-5 a x=0.95). Autopropulsione: T=7.5711e-06, D=7.5506e-06 (scarto 0.3%),
+    <u>disco=1.0134. Misura (misura_fine.py, riferimento conv_fine 6.97255e-06):
+    K = 2.0% (base 2.1%) ; P/P_conv - 1 = +10.0% (base +9.2%); con T=D a convergenza circa +9.7%.
+    -> differenza 0.5-0.8 punti: entro il criterio (1-2 punti).
+  disco_fine con la stessa misura: K = -0.6% (base +0.5%), P/P_conv - 1 = -8.1%.
+Nota: il caso intubato fine usa turbolenza di fondo diversa dal caso base; il confronto regge
+  perché lo stato turbolento lungo il corpo è lo stesso (nut_x), ma è una differenza da dichiarare.
+Lezione: con SST la soluzione è bistabile (turbolenta / laminare spuria) e dipende da griglia e
+  condizioni iniziali; controllare sempre nut lungo il corpo prima di usare un risultato.
+y+ prima cella (postProcessing/yPlus, min / max / media):
+  corpo: conv_ref 0.16/0.60/0.39 ; disco_A 0.16/0.89/0.43 ; carena_D 0.06/0.54/0.32
+         conv_fine 0.11/0.66/0.39 ; disco_fine 0.11/0.86/0.42 ; carena_fine2 0.06/0.54/0.32
+  carenatura: carena_D 0.69/2.48/1.45 ; carena_fine2 0.61/2.48/1.44
+  -> l'infittimento non cambia l'altezza della prima cella: la verifica di griglia non prova la
+     sensibilità alla risoluzione a parete (y+ carenatura fino a 2.5).

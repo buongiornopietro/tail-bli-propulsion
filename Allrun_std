@@ -1,0 +1,23 @@
+#!/bin/bash
+# prosegue un caso già decomposto (impostazioni standard) e poi ciclo di autopropulsione
+cd "$1"; . /opt/openfoam14/etc/bashrc
+export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+fd() { foamDictionary "$1" -entry "$2" -set "$3" > /dev/null; }
+esegui() {
+    t0=$(foamListTimes -processor -latestTime 2>/dev/null | tail -1); t0=${t0:-0}
+    fd system/controlDict endTime $((t0 + $1)); fd system/controlDict writeInterval 400
+    fd system/controlDict purgeWrite 0
+    mpirun --allow-run-as-root -np 4 foamRun -parallel > log.run.$2 2>&1
+}
+[ "${ITC:-0}" -gt 0 ] && esegui $ITC cont
+for it in $(seq 1 ${NAUTO:-3}); do
+    fc=$(ls -d postProcessing/forze/* | sort -t/ -k3 -n | tail -1)/forceCoeffs.dat
+    T=$(tail -1 $fc | awk '{printf "%.6e", 0.5*$3}')
+    fd constant/fvModels disco/sources/U/explicit "($T 0 0)"
+    esegui ${IT3:-800} auto$it
+    ud=$(ls -d postProcessing/Udisco/* | sort -t/ -k3 -n | tail -1)/volFieldValue.dat
+    Ux=$(tail -1 $ud | tr -d "()" | awk '{print $2}')
+    D=$(tail -1 $(ls -d postProcessing/forze/* | sort -t/ -k3 -n | tail -1)/forceCoeffs.dat | awk '{printf "%.6e", 0.5*$3}')
+    echo "iter $it: spinta T=$T  resistenza (corpo+carena) D=$D  <Ux>disco=$Ux" | tee -a autopropulsione.txt
+done
+echo FINE >> autopropulsione.txt

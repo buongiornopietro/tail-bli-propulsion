@@ -1,0 +1,15 @@
+Forma "garantita" (robusta.py, 2026-09-24). Guadagno di velocità a potenza fissata rispetto alla
+forma ottima turbolenta valutata NEGLI STESSI scenari (anche lei ha un tratto laminare).
+  Re_V 1e6: nominale +17.7% (nominale) ma -6.9% (mosso/rugoso); robusta L/D 4.0: +2.7% garantito
+  Re_V 3e6: nominale (L/D 2.9) +8.6..+12% ma -4.3% (rugoso); robusta +0.4% garantito
+  Re_V 1e7, 3e7: nessun guadagno (<0.6%): con il tetto Re_x = 5e6 (2e6 rugoso) il tratto laminare
+                 è comunque corto (< 10-17% della lunghezza).
+ATTENZIONE, correzione di quanto detto all'utente prima del calcolo:
+  i numeri "+46% a 1e6, +19% a 1e7" venivano da soglia.py, che usa REX_MAX = 1e12 (nessun tetto,
+  laminare fino a Re_x ~ 3e7) e confrontano con la resistenza TUTTA turbolenta (transizione forzata).
+  Sono un limite superiore ottimistico, non una previsione.
+Punti deboli da controllare:
+  - in alcuni scenari la transizione è innescata dal distacco laminare (sep_lam True), senza
+    penalità per la bolla: ottimistico per le forme nominali;
+  - Re_V 3e6: l'ottimo nominale (L/D 2.9) sembra un minimo locale; ripetere con altri semi;
+  - il tetto Re_x è un'ipotesi ad hoc che a Re alti decide tutto.

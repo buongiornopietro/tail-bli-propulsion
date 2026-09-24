@@ -1,0 +1,8 @@
+#!/bin/bash
+# ripetizione con turbolenza di fondo più alta (nu_t/nu = 25) e innesco più lungo
+W=$1
+cd ~/cfd
+OMEGA=0.3 XTRIP=0.15 ITC=2400 NAUTO=0 ./Allrun_D conv_fine2 $W/cfd/conv_fine > conv_fine2.log 2>&1
+echo "conv_fine2 fatto" >> fini2.txt
+OMEGA=0.3 XTRIP=0.15 ITC=3200 IT3=800 NAUTO=3 ./Allrun_D carena_fine2 $W/cfd/carena_fine > carena_fine2.log 2>&1
+echo "carena_fine2 fatto" >> fini2.txt

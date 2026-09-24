@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      fvModels;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+disco
+{
+    type            semiImplicitSource;
+    cellZone
+    {
+        type            cylinder;
+        point1          ( 0.895 0 0 );
+        point2          ( 0.905 0 0 );
+        radius          0.03;
+    }
+    volumeMode      absolute;
+    sources
+    {
+        U
+        {
+            explicit        ( 7.17091e-06 0 0 );
+            implicit        0;
+        }
+    }
+}
+
+
+// ************************************************************************* //

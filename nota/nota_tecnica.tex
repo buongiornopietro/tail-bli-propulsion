@@ -1,4 +1,5 @@
-% Technical note -- draft 2 (2026-09-24): reference-propeller sensitivity added
+% Technical note -- draft 3 (2026-09-25): English figures, guaranteed-shape section,
+% 2D optimisation dropped, references completed. Draft 2: reference-propeller sensitivity added
 % (Eq. pconv, Table tab:ref, confronto_elica.py) and text corrections; draft 1 is
 % nota_tecnica_bozza1.tex.
 % Figures are read from ../out/. Compile with pdflatex (e.g. on Overleaf: upload this file
@@ -22,7 +23,7 @@
 \title{Optimal streamlined bodies and the practical limits of tail-mounted\\
 boundary-layer-ingesting propulsion: a reduced-order and RANS study}
 \author{Pietro Buongiorno}
-\date{\todo{date}}
+\date{September 2026}
 
 \begin{document}
 \maketitle
@@ -37,7 +38,7 @@ A two-dimensional lattice-Boltzmann model, an axisymmetric panel/integral-bounda
 with shape optimisation, and axisymmetric RANS simulations ($k$--$\omega$ SST, OpenFOAM) are
 combined. The optimum is a conventional elongated teardrop, with fineness ratio $L/D\approx3$
 at fixed frontal area and $L/D\approx6$ at fixed volume; shapes based on the golden ratio or
-golden spirals have 1.7--3.6 times the drag of the optimum (a sphere 7.5 times), in agreement
+golden spirals have 1.9--3.6 times the drag of the best streamlined shape (a sphere 7.5 times), in agreement
 with Hoerner's classical data.
 For a fully turbulent boundary layer the reduced-order model gives a break-even duct loss
 $K^*$ that decreases from 8.5\% to 4.5\% of the free-stream dynamic pressure as $\ReV$ goes
@@ -69,7 +70,7 @@ The first question has a well-known answer in the engineering literature
 \cite{hoerner1965}; we re-derive it with reproducible tools and quantify how far the
 ``golden'' shapes are from the optimum. The second question is the basis of the
 Goldschmied body \cite{goldschmied1966} and of modern BLI aircraft concepts
-\cite{smith1993,drela2009,dellacorte2022}. Its theoretical benefit is clear, but
+\cite{smith1993,drela2009,dellacorte2021}. Its theoretical benefit is clear, but
 experimental results for suction bodies have been contradictory \cite{roepke2012}. Our aim is to separate the ideal BLI gain from the installation losses
 and to express the result as a simple design criterion: the maximum tolerable duct loss $K^*$.
 
@@ -78,8 +79,8 @@ and to express the result as a simple design criterion: the maximum tolerable du
 \subsection{Two-dimensional lattice-Boltzmann screening}
 A D2Q9 lattice-Boltzmann solver (\texttt{lbm.py}) was used at $Re=200$ (based on body
 height $H$, 30 lattice units) to compare a circle, golden-ratio shapes (ellipse, rectangle,
-teardrop, golden spiral) and teardrops of $L/H=3$ and $4.5$. A CMA-type evolution strategy
-(\texttt{opt.py}) optimised a four-parameter shape at fixed area.
+teardrop, golden spiral) and teardrops of $L/H=3$ and $4.5$. This 2D step is a qualitative
+screening only.
 
 \subsection{Axisymmetric reduced-order model}
 The inviscid flow is computed with an axisymmetric panel method; the boundary layer with an
@@ -88,6 +89,14 @@ integral method (laminar and turbulent closures, $e^N$ transition, separation de
 coefficients). The objective is the volumetric drag coefficient
 $C_{D,V}=D/(\tfrac12\rho U^2V^{2/3})$ (fixed volume) or the drag based on frontal area.
 Optimisation uses differential evolution (\texttt{axi\_opt.py}).
+To test how much a shape designed for natural transition depends on the uncertain transition
+location, six scenarios are defined (\texttt{robusta.py}): $e^N$ transition with free-stream
+turbulence $Tu=0.05$, $0.1$, $0.3$ and $1\%$, Michel's criterion, and a ``rough'' case with
+transition forced at $Re_x=2\times10^6$; transition is in any case capped at $Re_x=5\times10^6$
+($10^7$ for $Tu=0.05\%$). At fixed volume and power the speed scales as $C_{D,V}^{-1/3}$.
+Three shapes are compared at each $\ReV$: the turbulent optimum (reference), the
+\emph{nominal} optimum for $Tu=0.1\%$, and a \emph{guaranteed} shape that maximises the
+smallest speed gain over the six scenarios.
 
 \subsection{BLI model and break-even loss}
 The tail propulsor is modelled as an ingestion slot at $x_s$ with volume flow $Q$
@@ -151,18 +160,16 @@ $1.89\times10^{-3}\,L^2$) with the disc inside the duct.
 \section{Results}
 \subsection{Optimal body shape}
 In 2D at $Re=200$ (Fig.~\ref{fig:lbm}) the area-based drag coefficient of the golden-ratio shapes is
-$1.08$--$1.39$ (circle: $1.79$), against $0.73$ for the $L/H=3$ teardrop and $0.645$ for
-the optimised shape ($L/H\approx8.3$) (Fig.~\ref{fig:opt}), and $0.566$ for the $L/H=4.5$
-teardrop. The optimisation was run at a coarser resolution (body area 600 lattice cells,
-$H\approx10$) than the comparison shapes ($H=30$), so its drag coefficient is not directly
-comparable with the others; the 2D results are used only as a qualitative screening.
-\todo{either repeat the 2D optimisation at $H=30$ or drop it}
+$1.08$--$1.39$ (circle: $1.79$), against $0.73$ for the $L/H=3$ teardrop and $0.566$ for
+the $L/H=4.5$ teardrop, i.e.\ 1.9--2.5 times the best 2D shape. (A 2D shape optimisation
+was also run, but at a coarser lattice than the comparison shapes; its result is not
+comparable and is not reported.)
 
 In axisymmetric flow (Table~\ref{tab:shape}, Fig.~\ref{fig:opt3d}) the optimum at fixed
 volume and turbulent boundary layer has $L/D=6.6$ ($\ReV=10^7$); with natural transition
 $L/D=6.0$ at $\ReV=10^7$ and $9.3$ at $\ReV=10^6$ (long laminar run). At fixed frontal
 area the optimum is $L/D=3.2$. Golden-ratio bodies ($L/D=1.618$) separate on the afterbody
-and have 3--4 times the drag of the optimum; a sphere has about 7.5 times. These values are
+and have 2.4--3.6 times the drag of the optimum; a sphere has about 7.5 times. These values are
 consistent with Hoerner's compilation \cite{hoerner1965}.
 
 \begin{table}[h]\centering
@@ -176,6 +183,36 @@ Volume, turbulent, $\ReV=10^7$ & 6.58 & 0.0172 & 0.0617 & 0.0530 & 0.1288 & 0.01
 Volume, natural, $\ReV=10^7$ & 6.00 & 0.0165 & 0.0609 & 0.0516 & 0.1279 & 0.0168\\
 Volume, natural, $\ReV=10^6$ & 9.29 & 0.0072 & 0.0589 & 0.0540 & 0.1268 & 0.0133\\
 Frontal area, turb., $Re_D=10^6$ & 3.17 & 0.0370 & 0.0967 & 0.0898 & 0.1400 & 0.0506\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Robustness to the transition location}
+Table~\ref{tab:robusta} and Fig.~\ref{fig:robusta} give the speed change at equal power
+relative to the turbulent optimum. At $\ReV=10^6$ the nominal shape ($L/D=5.6$) is 16--18\%
+faster in calm conditions but 6--7\% slower when the free-stream turbulence is $0.3\%$ or more
+or the surface is rough: its gain depends on a long laminar run that disturbances destroy. The
+guaranteed shape ($L/D=4.0$) is faster in every scenario, but only by 2.7--3.6\%. At
+$\ReV=3\times10^6$ the guaranteed gain is $0.4\%$, and from $\ReV=10^7$ on all shapes coincide
+with the turbulent optimum within $0.6\%$, because the laminar run is a small fraction of the
+length. These numbers are optimistic in three respects: in some scenarios transition is
+triggered by laminar separation, with no penalty for the separation bubble; the cap on the
+laminar run is an assumption that decides the result at high $\ReV$; and the nominal optimum at
+$\ReV=3\times10^6$ ($L/D=2.9$) is probably a local minimum. The robust conclusion is the
+qualitative one: a laminar-flow shape can gain much or lose much, and the gain that can be
+guaranteed is small.
+
+\begin{table}[h]\centering
+\caption{Speed change at equal power relative to the turbulent optimum, range over the six
+transition scenarios (reduced-order model, \texttt{robusta.py}).}\label{tab:robusta}
+\begin{tabular}{lcccc}
+\toprule
+$\ReV$ & nominal $L/D$ & nominal shape & guaranteed $L/D$ & guaranteed shape\\
+\midrule
+$10^6$ & 5.6 & $-6.9$ to $+17.7\%$ & 4.0 & $+2.7$ to $+3.6\%$\\
+$3\times10^6$ & 2.9 & $-4.3$ to $+12.0\%$ & 5.3 & $+0.4$ to $+4.2\%$\\
+$10^7$ & 6.0 & $-0.5$ to $+0.6\%$ & 6.5 & $0.0$ to $+0.2\%$\\
+$3\times10^7$ & 6.5 & $0.0\%$ & 6.5 & $0.0\%$\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -349,7 +386,11 @@ model but not with independent experimental data.
 \section{Conclusions}
 \begin{enumerate}
 \item The minimum-drag body is a conventional teardrop ($L/D\approx3$ at fixed frontal
-area, $\approx6$ at fixed volume); golden-ratio shapes have 1.7--3.6 times the drag.
+area, $\approx6$ at fixed volume); golden-ratio shapes have 1.9--3.6 times the drag.
+\item Shapes optimised for a long laminar run are fragile: with natural transition at
+$\ReV=10^6$ they can be 18\% faster or 7\% slower than the turbulent optimum depending
+on the free-stream disturbances; a shape designed for the worst case guarantees only
+about 3\%, and nothing above $\ReV\approx10^7$.
 \item For turbulent boundary layers, tail BLI pays only if the duct loses less than
 $K^*=4.5$--$8.5\%$ of the dynamic pressure (against an ideal propeller; a conservative
 threshold).
@@ -382,7 +423,7 @@ table to the script that produces it; the repository README gives the commands.
 Item & Script (input $\rightarrow$ output)\\
 \midrule
 Fig.~\ref{fig:lbm} & \texttt{lbm.py} $\rightarrow$ \texttt{plot.py}\\
-Fig.~\ref{fig:opt} & \texttt{opt.py} $\rightarrow$ \texttt{plot\_opt.py}\\
+Table~\ref{tab:robusta}, Fig.~\ref{fig:robusta} & \texttt{robusta.py} $\rightarrow$ \texttt{plot\_robusta.py}\\
 Table~\ref{tab:shape}, Fig.~\ref{fig:opt3d} & \texttt{axi.py}, \texttt{axi\_opt.py} $\rightarrow$ \texttt{plot\_axi.py}\\
 Table~\ref{tab:kstar}, Fig.~\ref{fig:mappa} & \texttt{bli.py}, \texttt{bli\_opt.py}, \texttt{soglia.py} $\rightarrow$ \texttt{plot\_mappa\_finale.py}\\
 Goldschmied validation & \texttt{valida\_goldschmied.py}\\
@@ -398,31 +439,32 @@ $\nu_t$ check along the body & \texttt{nut\_x.py}\\
 \end{table}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{resistenza_Re200.png}
+\includegraphics[width=0.8\linewidth]{resistenza_Re200_en.png}
 \caption{2D lattice-Boltzmann drag at $Re=200$ for golden-ratio shapes and teardrops.}
 \label{fig:lbm}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{ottimizzazione.png}
-\caption{2D shape optimisation history.}\label{fig:opt}
+\includegraphics[width=\linewidth]{robusta_en.png}
+\caption{Nominal (optimised for Tu $=0.1\%$) and guaranteed (max--min) shapes with natural
+transition, and their speed change at equal power relative to the turbulent optimum in six
+transition scenarios.}\label{fig:robusta}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{ottimo_3D.png}
+\includegraphics[width=0.8\linewidth]{ottimo_3D_en.png}
 \caption{Axisymmetric optimal bodies.}\label{fig:opt3d}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{mappa_finale.png}
+\includegraphics[width=0.8\linewidth]{mappa_finale_en.png}
 \caption{Break-even duct loss $K^*$ versus $\ReV$. Solid line: fully turbulent boundary
 layer (result). Shaded band: spread between transition criteria for natural transition,
-shown for information only (not a result). \todo{figure labels to be translated into
-English}}\label{fig:mappa}
+shown for information only (not a result).}\label{fig:mappa}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{cfd_conv_1e6f.png}
+\includegraphics[width=0.8\linewidth]{cfd_conv_1e6f_en.png}
 \caption{RANS versus reduced-order model, bare body at $\ReV=10^6$.}\label{fig:cfdconv}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{carena_flusso.png}
+\includegraphics[width=0.8\linewidth]{carena_flusso_en.png}
 \caption{Flow near the tail with the ducted intake (case D).}\label{fig:carena}
 \end{figure}
 
@@ -430,18 +472,19 @@ English}}\label{fig:mappa}
 \bibitem{hoerner1965} S.~F. Hoerner, \emph{Fluid-Dynamic Drag}, published by the author, 1965.
 \bibitem{goldschmied1966} F.~R. Goldschmied, Integrated hull design, boundary-layer
 control, and propulsion of submerged bodies, AIAA 2nd Propulsion Joint Specialist Conference,
-1966; \emph{J. Hydronautics} 1(1), 1967. \todo{check page numbers}
+1966; \emph{J. Hydronautics} 1(1):2--11, 1967, doi:10.2514/3.62746.
 \bibitem{roepke2012} J.~Roepke, \emph{An experimental investigation of a Goldschmied
 propulsor}, MSc thesis, California Polytechnic State University, San Luis Obispo, 2012.
 \bibitem{smith1993} L.~H. Smith, Wake ingestion propulsion benefit, \emph{J. Propulsion and
-Power} 9(1), 1993.
-\bibitem{drela2009} M.~Drela, Power balance in aerodynamic flows, \emph{AIAA J.} 47(7), 2009.
-\bibitem{dellacorte2022} B.~Della~Corte, M.~van~Sluis, L.~L.~M. Veldhuis, A.~Gangoli~Rao,
+Power} 9(1):74--82, 1993, doi:10.2514/3.11487.
+\bibitem{drela2009} M.~Drela, Power balance in aerodynamic flows, \emph{AIAA J.} 47(7):1761--1771, 2009, doi:10.2514/1.42409.
+\bibitem{dellacorte2021} B.~Della~Corte, M.~van~Sluis, L.~L.~M. Veldhuis, A.~Gangoli~Rao,
 Power balance analysis experiments on an axisymmetric fuselage with an integrated
-boundary-layer-ingesting fan, \emph{AIAA J.}, doi:10.2514/1.J060570.
+boundary-layer-ingesting fan, \emph{AIAA J.} 59(12):5211--5224, 2021, doi:10.2514/1.J060570.
 \bibitem{menter1994} F.~R. Menter, Two-equation eddy-viscosity turbulence models for
-engineering applications, \emph{AIAA J.} 32(8), 1994.
+engineering applications, \emph{AIAA J.} 32(8):1598--1605, 1994, doi:10.2514/3.12149.
 \bibitem{langtry2009} R.~B. Langtry, F.~R. Menter, Correlation-based transition modeling
-for unstructured parallelized CFD codes, \emph{AIAA J.} 47(12), 2009.
+for unstructured parallelized CFD codes, \emph{AIAA J.} 47(12):2894--2906, 2009,
+doi:10.2514/1.42362.
 \end{thebibliography}
 \end{document}

@@ -1,5 +1,6 @@
 """Mappa finale: branca turbolenta (solida) e branca a transizione naturale
 (fascia tra il criterio di Michel, ottimistico, e il criterio e^N)."""
+import en_fig  # noqa: F401  (English figures with FIG_EN=1)
 import json, glob, numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 

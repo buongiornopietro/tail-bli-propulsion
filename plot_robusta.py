@@ -1,6 +1,7 @@
 """Figura della forma "garantita" (out/robusta.json -> out/robusta.png).
 Sinistra: profili delle tre forme per ogni Re_V. Destra: guadagno di velocità a potenza
 fissata rispetto alla goccia turbolenta, scenario per scenario."""
+import en_fig  # noqa: F401  (English figures with FIG_EN=1)
 import json
 import numpy as np
 import matplotlib

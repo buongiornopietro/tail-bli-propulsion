@@ -3,6 +3,7 @@
 uso: python plot_cfd.py <cartella_tempo> <chiave_profilo> <titolo>
 La cartella tempo deve contenere C, U, p, nut, yPlus in formato ascii.
 """
+import en_fig  # noqa: F401  (English figures with FIG_EN=1)
 import re, sys, json
 import numpy as np
 import matplotlib

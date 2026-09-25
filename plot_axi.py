@@ -1,3 +1,4 @@
+import en_fig  # noqa: F401  (English figures with FIG_EN=1)
 import json
 import numpy as np
 import matplotlib

@@ -18,7 +18,9 @@ All scripts are run from the repository root (they read and write `out/` and `cf
 
 ## What reproduces what
 
-Quick checks (seconds, from the saved data):
+Quick checks (seconds, from the saved data). The plotting scripts write Italian labels; with
+the environment variable `FIG_EN=1` they also write the English versions `*_en.png` used in
+the note (translation table in `en_fig.py`), e.g. `FIG_EN=1 python plot_axi.py`.
 
 | Item in the note | Command | Input | Output |
 |---|---|---|---|
@@ -31,7 +33,7 @@ Quick checks (seconds, from the saved data):
 | Free disc / ducted intake, budget table | `python misura_carena.py` | `cfd/disco_A`, `cfd/carena_D` | `out/misura_carena.json` |
 | Grid table | `python misura_fine.py` | `cfd/disco_fine`, `cfd/carena_fine2` | `out/misura_fine.json` (see also `out/griglia.txt`) |
 | Reference-propeller table | `python confronto_elica.py` | `out/misura_carena.json`, `out/misura_fine.json` | `out/confronto_elica.json` |
-| "Guaranteed" shape | `python plot_robusta.py` | `out/robusta.json` | `out/robusta.png` |
+| Fig. 2, "guaranteed" shape | `python plot_robusta.py` | `out/robusta.json` | `out/robusta.png` |
 
 Checked on 2026-09-24: the four measurement scripts reproduce the saved JSON files exactly,
 and the figures above are regenerated from the saved data.
@@ -40,7 +42,7 @@ Full recomputation (hours to days on a 4-core PC):
 
 | Item | Command | Output |
 |---|---|---|
-| Fig. 2, 2D shape optimisation | `python opt.py 8`, then `python plot_opt.py` (re-runs the LBM for the best shape) | `out/opt_storia.json`, `out/ottimizzazione.png` |
+| 2D shape optimisation (not used in the note: coarser lattice) | `python opt.py 8`, then `python plot_opt.py` | `out/opt_storia.json`, `out/ottimizzazione.png` |
 | 2D drag of each shape | `python lbm.py <shape> 200` | `out/<shape>_Re200.json` |
 | Shape table | `python axi_opt.py` | `out/axi_risultati.json` |
 | K* table | `python soglia.py` (all Re); `python soglia.py ripeti 1e7 forzata` (repeatability) | `out/soglia_*.json`, `out/soglia_tutti.json` |

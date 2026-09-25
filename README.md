@@ -19,7 +19,7 @@ All scripts are run from the repository root (they read and write `out/` and `cf
 ## What reproduces what
 
 Quick checks (seconds, from the saved data). The plotting scripts write Italian labels; with
-the environment variable `FIG_EN=1` they also write the English versions `*_en.png` used in
+the environment variable `FIG_EN=1` they write instead the English versions `*_en.png` used in
 the note (translation table in `en_fig.py`), e.g. `FIG_EN=1 python plot_axi.py`.
 
 | Item in the note | Command | Input | Output |

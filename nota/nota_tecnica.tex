@@ -20,7 +20,7 @@
 \newcommand{\ReV}{\mathit{Re}_V}
 \newcommand{\ReL}{\mathit{Re}_L}
 
-\title{Optimal streamlined bodies and the practical limits of tail-mounted\\
+\title{Optimal streamlined bodies and the practical limits of tail-mounted
 boundary-layer-ingesting propulsion: a reduced-order and RANS study}
 \author{Pietro Buongiorno}
 \date{September 2026}
@@ -418,7 +418,7 @@ table to the script that produces it; the repository README gives the commands.
 \begin{table}[h]\centering
 \caption{Scripts that produce each figure and table (all run from the repository root).}
 \label{tab:files}
-\begin{tabular}{ll}
+\begin{tabular}{lp{0.62\linewidth}}
 \toprule
 Item & Script (input $\rightarrow$ output)\\
 \midrule
@@ -439,9 +439,13 @@ $\nu_t$ check along the body & \texttt{nut\_x.py}\\
 \end{table}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{resistenza_Re200_en.png}
+\includegraphics[width=\linewidth]{resistenza_Re200_en.png}
 \caption{2D lattice-Boltzmann drag at $Re=200$ for golden-ratio shapes and teardrops.}
 \label{fig:lbm}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=\linewidth]{ottimo_3D_en.png}
+\caption{Axisymmetric optimal bodies.}\label{fig:opt3d}
 \end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{robusta_en.png}
@@ -450,21 +454,17 @@ transition, and their speed change at equal power relative to the turbulent opti
 transition scenarios.}\label{fig:robusta}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{ottimo_3D_en.png}
-\caption{Axisymmetric optimal bodies.}\label{fig:opt3d}
-\end{figure}
-\begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{mappa_finale_en.png}
+\includegraphics[width=0.9\linewidth]{mappa_finale_en.png}
 \caption{Break-even duct loss $K^*$ versus $\ReV$. Solid line: fully turbulent boundary
 layer (result). Shaded band: spread between transition criteria for natural transition,
 shown for information only (not a result).}\label{fig:mappa}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{cfd_conv_1e6f_en.png}
+\includegraphics[width=\linewidth]{cfd_conv_1e6f_en.png}
 \caption{RANS versus reduced-order model, bare body at $\ReV=10^6$.}\label{fig:cfdconv}
 \end{figure}
 \begin{figure}[p]\centering
-\includegraphics[width=0.8\linewidth]{carena_flusso_en.png}
+\includegraphics[width=0.9\linewidth]{carena_flusso_en.png}
 \caption{Flow near the tail with the ducted intake (case D).}\label{fig:carena}
 \end{figure}
 

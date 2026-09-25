@@ -1,4 +1,8 @@
-% Technical note -- draft 3 (2026-09-25): English figures, guaranteed-shape section,
+% Technical note -- version 2 (2026-09-25, after preprint v1 doi:10.5281/zenodo.22952930):
+% abstract ratios and equal-area saving aligned with the tables; transition criterion of Table 1
+% stated (Michel) with the e^N sensitivity; references for prior shape optimisation and methods.
+% v1 source: nota_tecnica_v1_zenodo.tex.
+% Draft 3 (2026-09-25): English figures, guaranteed-shape section,
 % 2D optimisation dropped, references completed. Draft 2: reference-propeller sensitivity added
 % (Eq. pconv, Table tab:ref, confronto_elica.py) and text corrections; draft 1 is
 % nota_tecnica_bozza1.tex.
@@ -39,14 +43,14 @@ body), and how large may the duct losses be before the saving disappears?
 A two-dimensional lattice-Boltzmann model, an axisymmetric panel/integral-boundary-layer model
 with shape optimisation, and axisymmetric RANS simulations ($k$--$\omega$ SST, OpenFOAM) are
 combined. The optimum is a conventional elongated teardrop, with fineness ratio $L/D\approx3$
-at fixed frontal area and $L/D\approx6$ at fixed volume; shapes based on the golden ratio or
-golden spirals have 1.9--3.6 times the drag of the best streamlined shape (a sphere 7.5 times), in agreement
-with Hoerner's classical data.
+at fixed frontal area and $L/D\approx6$ at fixed volume; with a turbulent boundary layer,
+axisymmetric golden-ratio bodies have 2.4--3.6 times the drag of the optimum (a sphere 3.8--7.5
+times), in agreement with Hoerner's classical data and with earlier optimisation studies.
 For a fully turbulent boundary layer the reduced-order model gives a break-even duct loss
 $K^*$ that decreases from 8.5\% to 4.5\% of the free-stream dynamic pressure as $\ReV$ goes
 from $3\times10^5$ to $10^8$. RANS simulations at $\ReV=10^6$ confirm the BLI gain: an
 unducted actuator disc ingesting the boundary layer needs $8\%$ less power than the bare
-body pushed by an ideal propeller of infinite disc area, and $15$--$18\%$ less than with an
+body pushed by an ideal propeller of infinite disc area, and $15\%$ less than with an
 isolated propeller of the same disc area. A flush wall slot loses essentially all the
 ingested total pressure ($K\approx0.8$--$1.0$). A well-designed ducted intake with a rounded
 lip keeps the intake loss at $K\approx2\%$, yet its self-propelled power ranges from $2\%$
@@ -69,7 +73,8 @@ boundary layer with a propulsor placed at the tail, instead of accelerating undi
 fluid with a conventional propeller?
 
 The first question has a well-known answer in the engineering literature
-\cite{hoerner1965}; we re-derive it with reproducible tools and quantify how far the
+\cite{hoerner1965}, and minimum-drag axisymmetric bodies have been optimised with
+panel/boundary-layer methods before \cite{parsons1974,myring1976,lutz1998}; we re-derive it with reproducible tools and quantify how far the
 ``golden'' shapes are from the optimum. The second question is the basis of the
 Goldschmied body \cite{goldschmied1966} and of modern BLI aircraft concepts
 \cite{smith1993,drela2009,dellacorte2021}. Its theoretical benefit is clear, but
@@ -79,18 +84,25 @@ and to express the result as a simple design criterion: the maximum tolerable du
 % ------------------------------------------------------------------
 \section{Methods}
 \subsection{Two-dimensional lattice-Boltzmann screening}
-A D2Q9 lattice-Boltzmann solver (\texttt{lbm.py}) was used at $Re=200$ (based on body
+A D2Q9 lattice-Boltzmann solver \cite{kruger2017} (\texttt{lbm.py}) was used at $Re=200$ (based on body
 height $H$, 30 lattice units) to compare a circle, golden-ratio shapes (ellipse, rectangle,
 teardrop, golden spiral) and teardrops of $L/H=3$ and $4.5$. This 2D step is a qualitative
 screening only.
 
 \subsection{Axisymmetric reduced-order model}
-The inviscid flow is computed with an axisymmetric panel method; the boundary layer with an
-integral method (laminar and turbulent closures, $e^N$ transition, separation detection)
-(\texttt{axi.py}). Bodies are described by five parameters (fineness ratio and four shape
-coefficients). The objective is the volumetric drag coefficient
+The method follows the classical approach of \cite{young1939,myring1976,lutz1998}
+(\texttt{axi.py}): the inviscid flow is computed with an axisymmetric panel method (vortex
+rings on the surface); the laminar boundary layer with Thwaites' method \cite{thwaites1949}
+in its axisymmetric form; transition with the $e^N$ envelope method of Drela and Giles
+\cite{drela1987} or with Michel's criterion \cite{michel1951}; the turbulent boundary layer with
+Head's entrainment method \cite{head1958} and the Ludwieg--Tillmann skin-friction law
+\cite{ludwieg1950}; separation is detected from Thwaites' parameter ($\lambda<-0.09$, laminar) or the shape factor
+($H>2.4$, turbulent), and a separated afterbody receives a base-drag estimate. The total drag follows from
+Young's formula \cite{young1939} applied to the momentum thickness near the tail.
+Bodies are described by five parameters (fineness ratio and four class/shape-function
+coefficients \cite{kulfan2008}). The objective is the volumetric drag coefficient
 $C_{D,V}=D/(\tfrac12\rho U^2V^{2/3})$ (fixed volume) or the drag based on frontal area.
-Optimisation uses differential evolution (\texttt{axi\_opt.py}).
+Optimisation uses differential evolution \cite{storn1997} (\texttt{axi\_opt.py}).
 To test how much a shape designed for natural transition depends on the uncertain transition
 location, six scenarios are defined (\texttt{robusta.py}): $e^N$ transition with free-stream
 turbulence $Tu=0.05$, $0.1$, $0.3$ and $1\%$, Michel's criterion, and a ``rough'' case with
@@ -168,15 +180,24 @@ was also run, but at a coarser lattice than the comparison shapes; its result is
 comparable and is not reported.)
 
 In axisymmetric flow (Table~\ref{tab:shape}, Fig.~\ref{fig:opt3d}) the optimum at fixed
-volume and turbulent boundary layer has $L/D=6.6$ ($\ReV=10^7$); with natural transition
-$L/D=6.0$ at $\ReV=10^7$ and $9.3$ at $\ReV=10^6$ (long laminar run). At fixed frontal
-area the optimum is $L/D=3.2$. Golden-ratio bodies ($L/D=1.618$) separate on the afterbody
-and have 2.4--3.6 times the drag of the optimum; a sphere has about 7.5 times. These values are
-consistent with Hoerner's compilation \cite{hoerner1965}.
+volume and turbulent boundary layer has $L/D=6.6$ ($\ReV=10^7$). At fixed frontal
+area the optimum is $L/D=3.2$. With a turbulent boundary layer, golden-ratio bodies
+($L/D=1.618$) separate on the afterbody and have 2.4--3.6 times the drag of the optimum; a
+sphere has 3.8--7.5 times. These values are consistent with Hoerner's compilation
+\cite{hoerner1965} and with earlier optimisations \cite{parsons1974,lutz1998}.
+
+The natural-transition rows of Table~\ref{tab:shape} were computed with Michel's criterion
+and the cap $Re_x\le5\times10^6$; they give $L/D=6.0$ at $\ReV=10^7$ and $L/D=9.3$ at
+$\ReV=10^6$, the latter with laminar flow up to $x/L=0.87$. They are optimistic and should be read
+as an upper bound: re-evaluated with the $e^N$ criterion ($Tu=0.1\%$), the same $\ReV=10^6$ body
+has $C_{D,V}=0.0180$ instead of $0.0072$, while the $\ReV=10^7$ body is unchanged ($0.0165$).
+The effect of the transition criterion on the shape is quantified in the next section, where
+the nominal $e^N$ optimum at $\ReV=10^6$ has $L/D=5.6$.
 
 \begin{table}[h]\centering
 \caption{Axisymmetric shape optimisation (reduced-order model). $C$: drag coefficient on the
-optimisation reference (volume$^{2/3}$ or frontal area).}\label{tab:shape}
+optimisation reference (volume$^{2/3}$ or frontal area). ``Natural'': transition by Michel's
+criterion, $Re_x\le5\times10^6$ (optimistic, see text).}\label{tab:shape}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccccc}
 \toprule
@@ -389,7 +410,8 @@ model but not with independent experimental data.
 \section{Conclusions}
 \begin{enumerate}
 \item The minimum-drag body is a conventional teardrop ($L/D\approx3$ at fixed frontal
-area, $\approx6$ at fixed volume); golden-ratio shapes have 1.9--3.6 times the drag.
+area, $\approx6$ at fixed volume); golden-ratio shapes have 2.4--3.6 times the drag in
+axisymmetric turbulent flow (1.9--2.5 times in the 2D screening).
 \item Shapes optimised for a long laminar run are fragile: with natural transition at
 $\ReV=10^6$ they can be 18\% faster or 7\% slower than the turbulent optimum depending
 on the free-stream disturbances; a shape designed for the worst case guarantees only
@@ -471,8 +493,35 @@ shown for information only (not a result).}\label{fig:mappa}
 \caption{Flow near the tail with the ducted intake (case D).}\label{fig:carena}
 \end{figure}
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 \bibitem{hoerner1965} S.~F. Hoerner, \emph{Fluid-Dynamic Drag}, published by the author, 1965.
+\bibitem{parsons1974} J.~S. Parsons, R.~E. Goodson, F.~R. Goldschmied, Shaping of axisymmetric
+bodies for minimum drag in incompressible flow, \emph{J. Hydronautics} 8(3):100--107, 1974,
+doi:10.2514/3.48131.
+\bibitem{myring1976} D.~F. Myring, A theoretical study of body drag in subcritical axisymmetric
+flow, \emph{Aeronautical Quarterly} 27(3):186--194, 1976.
+\bibitem{lutz1998} Th.~Lutz, S.~Wagner, Drag reduction and shape optimization of airship bodies,
+\emph{J. Aircraft} 35(3):345--351, 1998, doi:10.2514/2.2313.
+\bibitem{young1939} A.~D. Young, The calculation of the total and skin friction drags of bodies
+of revolution at zero incidence, ARC R\&M 1874, 1939.
+\bibitem{thwaites1949} B.~Thwaites, Approximate calculation of the laminar boundary layer,
+\emph{Aeronautical Quarterly} 1:245--280, 1949.
+\bibitem{drela1987} M.~Drela, M.~B. Giles, Viscous-inviscid analysis of transonic and low
+Reynolds number airfoils, \emph{AIAA J.} 25(10):1347--1355, 1987, doi:10.2514/3.9789.
+\bibitem{michel1951} R.~Michel, \'Etude de la transition sur les profils d'ailes; \'etablissement
+d'un crit\`ere de d\'etermination du point de transition et calcul de la tra\^in\'ee de profil
+incompressible, ONERA Rapport 1/1578A, 1951.
+\bibitem{head1958} M.~R. Head, Entrainment in the turbulent boundary layer, ARC R\&M 3152, 1958.
+\bibitem{ludwieg1950} H.~Ludwieg, W.~Tillmann, Investigations of the wall-shearing stress in
+turbulent boundary layers, NACA TM 1285, 1950.
+\bibitem{kulfan2008} B.~M. Kulfan, Universal parametric geometry representation method,
+\emph{J. Aircraft} 45(1):142--158, 2008, doi:10.2514/1.29958.
+\bibitem{storn1997} R.~Storn, K.~Price, Differential evolution -- a simple and efficient
+heuristic for global optimization over continuous spaces, \emph{J. Global Optimization}
+11:341--359, 1997, doi:10.1023/A:1008202821328.
+\bibitem{kruger2017} T.~Kr\"uger, H.~Kusumaatmaja, A.~Kuzmin, O.~Shardt, G.~Silva, E.~M. Viggen,
+\emph{The Lattice Boltzmann Method: Principles and Practice}, Springer, 2017,
+doi:10.1007/978-3-319-44649-3.
 \bibitem{goldschmied1966} F.~R. Goldschmied, Integrated hull design, boundary-layer
 control, and propulsion of submerged bodies, AIAA 2nd Propulsion Joint Specialist Conference,
 1966; \emph{J. Hydronautics} 1(1):2--11, 1967, doi:10.2514/3.62746.

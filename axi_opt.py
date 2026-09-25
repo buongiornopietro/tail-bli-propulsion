@@ -18,10 +18,11 @@ LB = np.log(0.1); UB = np.log(5.0)
 SCENARI = {
     "A_turbolento_ReV1e7": dict(Re=1e7, transition="forzata", obiettivo="volume",
                                 descr="Volume fisso, strato limite turbolento, Re_V = 10^7"),
-    "B_naturale_ReV1e7":   dict(Re=1e7, transition="naturale", obiettivo="volume",
-                                descr="Volume fisso, transizione naturale, Re_V = 10^7"),
-    "C_naturale_ReV1e6":   dict(Re=1e6, transition="naturale", obiettivo="volume",
-                                descr="Volume fisso, transizione naturale, Re_V = 10^6"),
+    # i risultati della nota (Tabella 1) per la transizione naturale usano il criterio di Michel
+    "B_naturale_ReV1e7":   dict(Re=1e7, transition="naturale", obiettivo="volume", criterio="michel",
+                                descr="Volume fisso, transizione naturale (Michel), Re_V = 10^7"),
+    "C_naturale_ReV1e6":   dict(Re=1e6, transition="naturale", obiettivo="volume", criterio="michel",
+                                descr="Volume fisso, transizione naturale (Michel), Re_V = 10^6"),
     "D_frontale_ReD1e6":   dict(Re=1e6, transition="forzata", obiettivo="frontale",
                                 descr="Sezione frontale fissa, turbolento, Re_D = 10^6"),
 }
@@ -29,6 +30,7 @@ SCENARI = {
 
 def cost_shape(x, r, sc):
     """Coefficiente da minimizzare per lo scenario (V = 1 in x, r)."""
+    axi.CRITERIO = sc.get("criterio", "eN")
     if sc["obiettivo"] == "volume":
         return axi.drag(x, r, sc["Re"], sc["transition"])
     D = 2 * r.max()

@@ -5,6 +5,7 @@
 Code and data for the technical note
 *"Optimal streamlined bodies and the practical limits of tail-mounted boundary-layer-ingesting
 propulsion: a reduced-order and RANS study"* (P. Buongiorno, 2026), source in `nota/nota_tecnica.tex`.
+Preprint: [doi:10.5281/zenodo.22952930](https://doi.org/10.5281/zenodo.22952930).
 
 The code was developed with extensive assistance from Claude (Anthropic), an AI assistant.
 Comments and variable names are in Italian.

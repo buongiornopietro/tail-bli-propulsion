@@ -68,3 +68,6 @@ Known pitfalls (spurious laminar SST state, numerical settings) are described in
 
 ## Licence
 Code: MIT (`LICENSE`). Data, figures and text: CC BY 4.0.
+
+## Compiling the note
+`nota/nota_tecnica.pdf` is the compiled note. To rebuild it: `cd nota && tectonic nota_tecnica.tex` (Tectonic 0.17); figures are read from `../out/`.

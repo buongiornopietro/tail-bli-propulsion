@@ -10,7 +10,7 @@ PHI = (1 + 5 ** 0.5) / 2
 R = json.load(open("out/axi_risultati.json"))
 COL = {"A": "#2471a3", "B": "#17a589", "C": "#8e44ad", "D": "#d35400"}
 
-fig = plt.figure(figsize=(13, 10))
+fig = plt.figure(figsize=(13, 10), layout="constrained")
 gs = fig.add_gridspec(3, 2, height_ratios=[1.15, 1, 1])
 
 # 1) curve: migliore resistenza ottenibile vs L/D, normalizzata all'ottimo
@@ -71,6 +71,6 @@ t.auto_set_font_size(False); t.set_fontsize(9); t.scale(1, 1.6)
 ax.set_title("Resistenza in più rispetto all'ottimo\n(* flusso staccato: valore stimato)", fontsize=10)
 
 fig.suptitle("Corpi di rivoluzione 3D a Reynolds reali — pannelli + strato limite integrale", fontsize=12)
-plt.tight_layout()
+# layout="constrained" above: no overlap between the axis label and the next panel title
 plt.savefig("out/ottimo_3D.png", dpi=110)
 print("ok")

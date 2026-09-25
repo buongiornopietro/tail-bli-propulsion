@@ -1,5 +1,7 @@
 # Optimal streamlined bodies and tail-mounted boundary-layer-ingesting propulsion
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22949388.svg)](https://doi.org/10.5281/zenodo.22949388)
+
 Code and data for the technical note
 *"Optimal streamlined bodies and the practical limits of tail-mounted boundary-layer-ingesting
 propulsion: a reduced-order and RANS study"* (P. Buongiorno, 2026), source in `nota/nota_tecnica.tex`.

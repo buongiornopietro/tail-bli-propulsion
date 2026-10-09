@@ -1,0 +1,55 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : foamFormatConvert -time 4800
+Date   : Oct 09 2026
+Time   : 04:54:30
+Host   : "EVO-X2"
+PID    : 36289
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_disco_rada
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Time = constant
+        Reading labelList : owner
+        Writing owner
+        Reading labelList : neighbour
+        Writing neighbour
+        Reading faceCompactList : faces
+        Writing faces
+        Reading vectorField : points
+        Writing points
+        Reading polyBoundaryMesh : boundary
+        Writing boundary
+
+Time = 4800s
+        Reading volVectorField : wallShearStress
+        Writing wallShearStress
+        Reading volScalarField : nut
+        Writing nut
+        Reading volScalarField : yPlus
+        Writing yPlus
+        Reading volVectorField : U
+        Writing U
+        Reading volScalarField : k
+        Writing k
+        Reading surfaceScalarField : phi
+        Writing phi
+        Reading volScalarField : p
+        Writing p
+        Reading volScalarField : omega
+        Writing omega
+
+End
+

@@ -1,0 +1,108 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : decomposePar
+Date   : Oct 09 2026
+Time   : 04:55:16
+Host   : "EVO-X2"
+PID    : 38045
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_disco_re7
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #13639 with centre (0.32889606 3.8248461 -0.16699639) the normal (5.0310916e-08 -0.043619387 -0.99904822) differs from the average normal (1.6136166e-10 -0.043619387 -0.99904822) by 2.5149823e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #13639 with centre (0.32889606 3.8248461 0.16699639) the normal (5.0310915e-08 -0.043619387 0.99904822) differs from the average normal (1.6136167e-10 -0.043619387 0.99904822) by 2.5149822e-15
+
+Calculating distribution of cells
+
+
+Selecting decomposer scotch
+
+Finished decomposition in 0.045859 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+
+Processor 0
+    Number of cells = 12126
+    Number of faces shared with processor 1 = 114
+    Number of faces shared with processor 3 = 116
+    Number of processor patches = 2
+    Number of processor faces = 230
+    Number of boundary faces = 24425
+
+Processor 1
+    Number of cells = 12091
+    Number of faces shared with processor 0 = 114
+    Number of processor patches = 1
+    Number of processor faces = 114
+    Number of boundary faces = 24399
+
+Processor 2
+    Number of cells = 12104
+    Number of faces shared with processor 3 = 112
+    Number of processor patches = 1
+    Number of processor faces = 112
+    Number of boundary faces = 24428
+
+Processor 3
+    Number of cells = 12079
+    Number of faces shared with processor 0 = 116
+    Number of faces shared with processor 2 = 112
+    Number of processor patches = 2
+    Number of processor faces = 228
+    Number of boundary faces = 24378
+
+Number of processor faces = 342
+Max number of cells = 12126 (0.21487603% above average 12100)
+Max number of processor patches = 2 (33.333333% above average 1.5)
+Max number of faces between processors = 230 (34.502924% above average 171)
+
+Time = 0s
+
+Decomposing FV fields
+
+    Decomposing volScalarFields
+
+        p
+        nut
+        k
+        omega
+
+    Decomposing volVectorFields
+
+        U
+
+Decomposing point fields
+
+    (no point fields)
+
+End
+

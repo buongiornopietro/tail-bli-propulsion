@@ -1,0 +1,28 @@
+#!/bin/bash
+# Come Allrun_std, ma con aggiornamento SMORZATO della spinta di autopropulsione:
+#   T_nuova = T + W * (D - T)      (W = 0.5 di default; Allrun_std usa W = 1, cioe' T_nuova = D)
+# Per casi in cui T e D oscillano (v3_carena_re7, nota 1 v3). Riparte dall'ultimo tempo di un caso
+# gia' decomposto, partendo dalla spinta attuale scritta in constant/fvModels.
+# uso: NAUTO=6 IT3=800 W=0.5 ./Allrun_smorzato <cartella_caso>
+cd "$1" || exit 1; . /opt/openfoam14/etc/bashrc
+export OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+fd() { foamDictionary "$1" -entry "$2" -set "$3" > /dev/null; }
+esegui() {
+    t0=$(foamListTimes -processor -latestTime 2>/dev/null | tail -1); t0=${t0:-0}
+    fd system/controlDict endTime $((t0 + $1)); fd system/controlDict writeInterval 400
+    fd system/controlDict purgeWrite 0
+    mpirun --allow-run-as-root -np 4 foamRun -parallel > log.run.$2 2>&1
+}
+ultimaD() { tail -1 $(ls -d postProcessing/forze/* | sort -t/ -k3 -n | tail -1)/forceCoeffs.dat | awk '{printf "%.6e", 0.5*$3}'; }
+T=$(foamDictionary constant/fvModels -entry disco/sources/U/explicit -value | tr -d "()" | awk '{printf "%.6e", $1}')
+echo "smorzato W=${W:-0.5}: spinta iniziale T=$T, ultima resistenza D=$(ultimaD)" | tee -a autopropulsione.txt
+for it in $(seq 1 ${NAUTO:-6}); do
+    D=$(ultimaD)
+    T=$(awk -v t="$T" -v d="$D" -v w="${W:-0.5}" 'BEGIN{printf "%.6e", t + w * (d - t)}')
+    fd constant/fvModels disco/sources/U/explicit "($T 0 0)"
+    esegui ${IT3:-800} smorz$it
+    ud=$(ls -d postProcessing/Udisco/* | sort -t/ -k3 -n | tail -1)/volFieldValue.dat
+    Ux=$(tail -1 $ud | tr -d "()" | awk '{print $2}')
+    echo "smorz $it: spinta T=$T  resistenza (corpo+carena) D=$(ultimaD)  <Ux>disco=$Ux" | tee -a autopropulsione.txt
+done
+echo FINE >> autopropulsione.txt

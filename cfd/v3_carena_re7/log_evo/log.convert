@@ -1,0 +1,61 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : foamFormatConvert -time 10400
+Date   : Oct 09 2026
+Time   : 09:47:21
+Host   : "EVO-X2"
+PID    : 49896
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_carena_re7
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Time = constant
+        Reading labelList : owner
+        Writing owner
+        Reading labelList : neighbour
+        Writing neighbour
+--> FOAM Warning: 
+    From function bool Foam::IOobject::typeHeaderOk(bool) [with Type = Foam::CompactIOList<Foam::face>]
+    in file /home/ubuntu/OpenFOAM/OpenFOAM-14/src/OpenFOAM/lnInclude/IOobjectTemplates.C at line 57
+    unexpected class name faceList expected faceCompactList when reading "/home/buongiornopietro/cfd/v3_carena_re7/constant/polyMesh/faces"
+        Reading faceList : faces
+        Writing faces
+        Reading vectorField : points
+        Writing points
+        Reading polyBoundaryMesh : boundary
+        Writing boundary
+
+Time = 10400s
+        Reading volVectorField : wallShearStress
+        Writing wallShearStress
+        Reading volScalarField : nut
+        Writing nut
+        Reading volScalarField : yPlus
+        Writing yPlus
+        Reading volVectorField : U
+        Writing U
+        Reading volScalarField : k
+        Writing k
+        Reading surfaceScalarField : phi
+        Writing phi
+        Reading volScalarField : total(p)
+        Writing total(p)
+        Reading volScalarField : p
+        Writing p
+        Reading volScalarField : omega
+        Writing omega
+
+End
+

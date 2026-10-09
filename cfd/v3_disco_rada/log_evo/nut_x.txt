@@ -1,0 +1,10 @@
+x=0.05  nut_max=3.18e-06
+x=0.15  nut_max=7.22e-06
+x=0.25  nut_max=1.15e-05
+x=0.35  nut_max=1.58e-05
+x=0.45  nut_max=2.18e-05
+x=0.55  nut_max=2.94e-05
+x=0.65  nut_max=3.84e-05
+x=0.75  nut_max=4.84e-05
+x=0.85  nut_max=5.65e-05
+x=0.95  nut_max=6.11e-05

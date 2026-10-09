@@ -1,0 +1,12 @@
+iter 1: spinta T=1.094807e-05  resistenza (corpo+carena) D=7.181680e-06  <Ux>disco=1.10793695e+00
+iter 2: spinta T=7.181680e-06  resistenza (corpo+carena) D=6.032384e-06  <Ux>disco=1.05934406e+00
+iter 3: spinta T=6.032384e-06  resistenza (corpo+carena) D=6.692289e-06  <Ux>disco=9.99496564e-01
+FINE
+smorzato W=0.5: spinta iniziale T=6.032380e-06, ultima resistenza D=6.692289e-06
+smorz 1: spinta T=6.362335e-06  resistenza (corpo+carena) D=6.544609e-06  <Ux>disco=1.00173738e+00
+smorz 2: spinta T=6.453472e-06  resistenza (corpo+carena) D=6.442549e-06  <Ux>disco=1.00586215e+00
+smorz 3: spinta T=6.448011e-06  resistenza (corpo+carena) D=6.347704e-06  <Ux>disco=1.00648948e+00
+smorz 4: spinta T=6.397858e-06  resistenza (corpo+carena) D=6.252348e-06  <Ux>disco=1.00519703e+00
+smorz 5: spinta T=6.325103e-06  resistenza (corpo+carena) D=6.165404e-06  <Ux>disco=1.00282113e+00
+smorz 6: spinta T=6.245254e-06  resistenza (corpo+carena) D=6.074662e-06  <Ux>disco=1.00041635e+00
+FINE

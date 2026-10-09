@@ -1,0 +1,153 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : blockMesh
+Date   : Oct 09 2026
+Time   : 03:43:25
+Host   : "EVO-X2"
+PID    : 27575
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_carena_G
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Reading "blockMeshDict"
+
+Creating block mesh from
+    "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+
+Basic statistics
+    Number of internal faces : 23
+    Number of boundary faces : 56
+    Number of defined boundary faces : 56
+    Number of undefined boundary faces : 0
+
+Checking topology
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.00029369782 .. 0.003915966 0.00029370289 .. 0.0039160359 0.00029369782 .. 0.003915966 0.00029370289 .. 0.0039160359 
+        j : 3.4329463e-06 .. 0.0016691431 3.4332155e-06 .. 0.001669162 3.4329463e-06 .. 0.0016691431 3.4332155e-06 .. 0.001669162 
+        k : 0 2.5612177e-05 0 2.561262e-05 
+    Block 1 cell size :
+        i : 0.000331729 .. 0.0044230477 0.00033244949 .. 0.0044326543 0.000331729 .. 0.0044230477 0.00033244949 .. 0.0044326543 
+        j : 0.00055555556 .. 0.00055555556 0.00055554843 .. 0.00055554843 0.00055555556 .. 0.00055555556 0.00055554843 .. 0.00055554843 
+        k : 0 2.8932207e-05 0 2.8995063e-05 
+    Block 2 cell size :
+        i : 0.00035766704 .. 0.0047688878 0.00036387983 .. 0.0047752318 0.00035766704 .. 0.0047688878 0.00036387983 .. 0.0047752318 
+        j : 0.00055555587 .. 0.26517015 0.00055627026 .. 0.2641886 0.00055555587 .. 0.26517015 0.00055627026 .. 0.2641886 
+        k : 0 3.1195038e-05 0 3.1738374e-05 
+    Block 3 cell size :
+        i : 0.0040394281 .. 0.00302957
+        j : 3.4329491e-06 .. 0.0013596195 3.4329491e-06 .. 0.001346075 3.4329491e-06 .. 0.0013596195 3.4329491e-06 .. 0.001346075 
+        k : 0.0067387575 0.006738353 0.006739057 0.0067386525 
+    Block 4 cell size :
+        i : 0.0040394281 .. 0.00302957 0.0040396087 .. 0.0030297997 0.0040394281 .. 0.00302957 0.0040396087 .. 0.0030297997 
+        j : 0.00027777778 .. 0.00027777778 0.00027217504 .. 0.00027217504 0.00027777778 .. 0.00027777778 0.00027217504 .. 0.00027217504 
+        k : 0.0087569821 0.0087565775 0.0087812151 0.0087803218 
+    Block 5 cell size :
+        i : 0.0040503314 .. 0.003037747 0.0040504999 .. 0.0030383137 0.0040503314 .. 0.003037747 0.0040504999 .. 0.0030383137 
+        j : 0.00026962088 .. 0.29082387 0.00026659217 .. 0.29250319 0.00026962088 .. 0.29082387 0.00026659217 .. 0.29250319 
+        k : 0.0096293698 0.0096122455 0.0096528912 0.0096355027 
+    Block 6 cell size :
+        i : 0.003025202 .. 1.0084031e-05
+        j : 3.4329491e-06 .. 9.9999933e-06
+        k : 0.0022391998 0.0021958276 0.0022394993 0.0021961271 
+    Block 7 cell size :
+        i : 0.003025202 .. 1.0084031e-05 0.0030250549 .. 1.0083525e-05 0.003025202 .. 1.0084031e-05 0.0030250549 .. 1.0083525e-05 
+        j : 9.999988e-06 .. 1.0000003e-05 9.9659071e-06 .. 9.9654533e-06 9.999988e-06 .. 1.0000003e-05 9.9659071e-06 .. 9.9654533e-06 
+        k : 0.0042574244 0.0042140521 0.0042582968 0.0042149214 
+    Block 8 cell size :
+        i : 0.003025202 .. 1.0084031e-05
+        j : 9.9320894e-06 .. 0.44732244 9.9337203e-06 .. 0.44738355 9.9320894e-06 .. 0.44732244 9.9337203e-06 .. 0.44738355 
+        k : 0.0043012119 0.0042578396 0.0043020784 0.0042587062 
+    Block 9 cell size :
+        i : 1.0014291e-05 .. 6.008567e-05
+        j : 3.4329491e-06 .. 9.9999933e-06 3.4320304e-06 .. 9.9973171e-06 3.4329491e-06 .. 9.9999933e-06 3.4320304e-06 .. 9.9973171e-06 
+        k : 0.00051594372 0.00051587451 0.0005162432 0.00051617392 
+    Block 10 cell size :
+        i : 1.0027945e-05 .. 6.0167591e-05 1.0028948e-05 .. 6.0168843e-05 1.0027945e-05 .. 6.0167591e-05 1.0028948e-05 .. 6.0168843e-05 
+        j : 9.9957606e-06 .. 0.45019007
+        k : 0.0025779558 0.002578563 0.0025788278 0.0025794351 
+    Block 11 cell size :
+        i : 6.0013519e-05 .. 0.0020004523
+        j : 4.0951017e-06 .. 1.1928808e-05 4.0953487e-06 .. 1.1929527e-05 4.0951017e-06 .. 1.1928808e-05 4.0953487e-06 .. 1.1929527e-05 
+        k : 9.1898978e-05 9.1753781e-05 9.2256229e-05 9.2111054e-05 
+    Block 12 cell size :
+        i : 5.9999958e-05 .. 0.0020000003
+        j : 1.7493761e-05 .. 1.7493749e-05
+        k : 0.0024994018 0.0024994018 0.0025009279 0.0025009279 
+    Block 13 cell size :
+        i : 5.9999958e-05 .. 0.0020000003
+        j : 9.9999923e-06 .. 0.45038065
+        k : 0.0025604471 0.0025604471 0.0025613195 0.0025613195 
+    Block 14 cell size :
+        i : 0.0019999991 .. 0.2386499
+        j : 4.2514196e-06 .. 1.2384153e-05
+        k : 0 0 3.7088863e-07 3.7088863e-07 
+    Block 15 cell size :
+        i : 0.0019999991 .. 0.2386499
+        j : 1.7493761e-05 .. 1.7493749e-05
+        k : 0.0024994018 0.0024994018 0.0025009279 0.0025009279 
+    Block 16 cell size :
+        i : 0.0019999991 .. 0.2386499
+        j : 1.0000496e-05 .. 0.45040334 1.0001227e-05 .. 0.45043625 1.0000496e-05 .. 0.45040334 1.0001227e-05 .. 0.45043625 
+        k : 0.0025604471 0.0025604471 0.0025613196 0.0025613196 
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #51524 with centre (0.8551147 0.029025481 -0.0012672798) the normal (9.2884764e-09 -0.043619268 -0.99904823) differs from the average normal (2.5942455e-11 -0.043619387 -0.99904822) by 1.4387461e-14
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #51524 with centre (0.8551147 0.029025481 0.0012672798) the normal (9.2884764e-09 -0.043619268 0.99904823) differs from the average normal (2.5942453e-11 -0.043619387 0.99904822) by 1.4387461e-14
+
+
+No patch pairs to merge
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (-4 0 -0.17447755) (8 3.9961929 0.17447755)
+  nPoints: 266236
+  nCells: 132260
+  nFaces: 529716
+  nInternalFaces: 263478
+----------------
+Patches
+----------------
+  patch 0 (start: 263478 size: 132260) name: front
+  patch 1 (start: 395738 size: 132260) name: back
+  patch 2 (start: 527998 size: 490) name: corpo
+  patch 3 (start: 528488 size: 630) name: esterno
+  patch 4 (start: 529118 size: 392) name: carena
+  patch 5 (start: 529510 size: 206) name: uscita
+  patch 6 (start: 529716 size: 0) name: defaultFaces
+
+End
+

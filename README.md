@@ -35,6 +35,9 @@ the note (translation table in `en_fig.py`), e.g. `FIG_EN=1 python plot_axi.py`.
 | Grid table | `python misura_fine.py` | `cfd/disco_fine`, `cfd/carena_fine2` | `out/misura_fine.json` (see also `out/griglia.txt`) |
 | Reference-propeller table | `python confronto_elica.py` | `out/misura_carena.json`, `out/misura_fine.json` | `out/confronto_elica.json` |
 | Fig. 2, "guaranteed" shape | `python plot_robusta.py` | `out/robusta.json` | `out/robusta.png` |
+| Version 3: Delft comparison (wake energy) | `python delft_confronto.py` | `cfd/conv_ref` | `out/delft_confronto.json` |
+| Version 3: cowls (e)-(g), coarse grid, Re x10 | `python misura_v3.py` | `cfd/v3_*` | `out/misura_v3.json` |
+| Version 3: iterative drift of the drag | `python deriva_v3.py v3_conv_rada v3_conv_re7 ...` | `cfd/v3_*/postProcessing/forze` | printed |
 
 Checked on 2026-09-24: the four measurement scripts reproduce the saved JSON files exactly,
 and the figures above are regenerated from the saved data.
@@ -59,6 +62,7 @@ RANS cases (OpenFOAM 14):
 | flush slot `gold_v2`, `K_006`, `K_024` | `cfd_gold.py` + `cfd_blockmesh_seg.py` | `Allrun_gold` |
 | ducted intake `carena_D` | `cfd_carena.py` | `Allrun_D` / `Allrun_carena` |
 | fine grids `conv_fine`, `disco_fine`, `carena_fine2` | `genera_fini.py` | `Allrun_fini`, `Allrun_fini2` |
+| version 3: `v3_conv_rada`, `v3_disco_rada`, `v3_conv_re7`, `v3_disco_re7`, `v3_carena_E/F/G` (and the non-reported `v3_carena_rada`, `v3_carena_re7`) | `genera_v3.py` | `coda_v3.sh` (Allrun_D); `Allrun_smorzato` for the damped retry |
 | turbulence check along the body | `nut_x.py` | — |
 
 The run-script column was reconstructed from the working folder after the fact; the exact

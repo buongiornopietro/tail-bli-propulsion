@@ -1,5 +1,27 @@
 # Changes to the technical note
 
+## Version 3 (2026-10)
+
+Relative to preprint v2 (doi:10.5281/zenodo.22955086). New RANS cases computed on a second PC with the
+same OpenFOAM 14 settings (a v2 case repeated there reproduced the drag to all printed digits).
+
+1. Comparison with the Delft experiment (Della Corte et al. 2021), new Sec. "Comparison with the Delft
+   experiment" and table: mechanical energy deposited behind the bare body, same definition as their
+   Eq. 10 (kinetic terms plus pressure work, over the momentum-deficit power): 9.9% (RANS, Re_L 4.95e6)
+   against about 13% (PIV, Re_L about 2.4e6). Script `delft_confronto.py`.
+2. Three more cowls (shorter/thinner; less convergent exit; nearly constant section), new table. The
+   shorter, thinner cowl lowers the ducted power from +9.2% to +4.3% (ideal propeller) and from -2.1%
+   to -6.2% (equal-area propeller); opening the exit makes it worse. Scripts `genera_v3.py`, `misura_v3.py`.
+3. Third (coarser) grid: grid error of the bare-body drag at most 0.5% (GCI, Celik et al. 2008); iterative
+   drift of each grid stated (`deriva_v3.py`). The ducted case diverged on the coarse grid and is not reported.
+4. Second Reynolds number (Re_L 4.95e7): bare-body drag -29%; free-disc saving 6.7% (ideal propeller) and
+   11.9% (equal-area), against 8.2% and 15.3%. The ducted case did not converge at this Reynolds number
+   (also with a damped thrust update, `Allrun_smorzato`) and is not reported.
+5. Abstract, discussion, conclusions and limitations updated accordingly; consistency fixes from an
+   internal review (effective disc areas, ranges, captions, inflow-turbulence exceptions).
+
+No v2 result changed.
+
 ## Version 2 (2026-09-25)
 
 Relative to preprint v1 (doi:10.5281/zenodo.22952930).

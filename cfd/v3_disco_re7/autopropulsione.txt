@@ -1,0 +1,4 @@
+iter 1: spinta T=5.037907e-06  resistenza (corpo+carena) D=5.050964e-06  <Ux>disco=9.07071686e-01
+iter 2: spinta T=5.050964e-06  resistenza (corpo+carena) D=5.051304e-06  <Ux>disco=9.07286310e-01
+iter 3: spinta T=5.051304e-06  resistenza (corpo+carena) D=5.051312e-06  <Ux>disco=9.07292022e-01
+FINE

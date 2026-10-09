@@ -1,0 +1,99 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : checkMesh
+Date   : Oct 09 2026
+Time   : 03:43:26
+Host   : "EVO-X2"
+PID    : 27576
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_carena_G
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #51524 with centre (0.8551147 0.029025481 -0.0012672798) the normal (9.2884764e-09 -0.043619268 -0.99904823) differs from the average normal (2.5942455e-11 -0.043619387 -0.99904822) by 1.4387461e-14
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #51524 with centre (0.8551147 0.029025481 0.0012672798) the normal (9.2884764e-09 -0.043619268 0.99904823) differs from the average normal (2.5942453e-11 -0.043619387 0.99904822) by 1.4387461e-14
+
+Time = 0s
+
+Mesh stats
+    points:           266236
+    internal points:  0
+    faces:            529716
+    internal faces:   263478
+    cells:            132260
+    faces per cell:   5.9972327
+    boundary patches: 7
+    point zones:      0
+    face zones:       0
+    cell zones:       0
+
+Overall number of cells of each type:
+    hexahedra:     131893
+    prisms:        366
+    wedges:        1
+    pyramids:      0
+    tet wedges:    0
+    tetrahedra:    0
+    polyhedra:     0
+
+Checking topology...
+    Boundary definition OK.
+    Cell to face addressing OK.
+    Point usage OK.
+    Upper triangular ordering OK.
+    Face vertices OK.
+    Number of regions: 1 (OK).
+
+Checking patch topology for multiply connected surfaces...
+    Patch               Faces    Points   Surface topology                  
+    front               132260   133302   ok (non-closed singly connected)  
+    back                132260   133302   ok (non-closed singly connected)  
+    corpo               490      980      ok (non-closed singly connected)  
+    esterno             630      1261     ok (non-closed singly connected)  
+    carena              392      784      ok (non-closed singly connected)  
+    uscita              206      413      ok (non-closed singly connected)  
+    defaultFaces        0        0        ok (empty)                        
+
+Checking geometry...
+    Overall domain bounding box (-4 0 -0.17447755) (8 3.9961929 0.17447755)
+    Mesh has 2 geometric (non-empty/wedge) directions (1 1 0)
+    Mesh has 3 solution (non-empty) directions (1 1 1)
+    Wedge front with angle 2.5 degrees
+    Wedge back with angle 2.5 degrees
+    All edges aligned with or perpendicular to non-empty directions.
+ ***High aspect ratio cells found, Max aspect ratio: 112375.29, number of cells 5721
+    Minimum face area = 7.8765121e-13. Maximum face area = 0.19292202.  Face area magnitudes OK.
+    Min volume = 1.5753017e-15. Max volume = 0.0094081124.  Total volume = 7.2039904.  Cell volumes OK.
+    Mesh non-orthogonality Max: 85.371946 average: 17.159991
+   *Number of severely non-orthogonal (> 70 degrees) faces: 9.
+    Non-orthogonality check OK.
+    Face pyramids OK.
+    Max skewness = 2.0839954 OK.
+    Coupled point location match (average 0) OK.
+
+Failed 1 mesh checks.
+
+End
+

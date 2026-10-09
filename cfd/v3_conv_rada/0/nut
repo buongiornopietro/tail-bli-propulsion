@@ -1,0 +1,29 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Version:  14
+    \\  /    A nd           |
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      nut;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+dimensions [0 2 -1 0 0 0 0];
+internalField uniform 0;
+boundaryField
+{
+    corpo    { type nutLowReWallFunction; value uniform 0; }
+
+    uscita   { type calculated; value uniform 0; }
+    esterno  { type calculated; value uniform 0; }
+    front    { type wedge; }
+    back     { type wedge; }
+    asse     { type empty; }
+}

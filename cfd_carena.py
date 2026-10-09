@@ -30,6 +30,7 @@ XIN, XOUT, R = -4.0, 8.0, 4.0
 H_CORPO_YP = 0.7                     # y+ del primo strato sul corpo
 H_CAR = 1.0e-5                       # primo strato sulla carenatura (y+ ~ 2)
 FATTORE = 1.0                        # moltiplica il numero di celle in ogni direzione
+RE_L = None                          # None: Re_L del profilo; altrimenti Re_L imposto (versione 3)
 G1N, T2N, T2M = 0.0275, 0.02, 0.01    # spessori delle fasce davanti al naso e al max spessore
 X_T = 0.70                           # colonna di transizione: da qui in poi fasce fitte
 
@@ -241,7 +242,7 @@ def blockMeshDict(x, r, Re_L):
 def main(nome, T0=7.2e-6):
     prof = json.load(open("out/cfd_profili.json"))[CHIAVE]
     x, r = np.array(prof["x"]), np.array(prof["r"]); L = x[-1]; x = x / L; r = r / L
-    Re_L = prof["ReL"]
+    Re_L = RE_L or prof["ReL"]
     cfd_caso.caso(nome, x, r, Re_L, H_CORPO_YP, modello="kOmegaSST")
     bm, geo = blockMeshDict(x, r, Re_L)
     cfd_caso.scrivi(nome, "system/blockMeshDict", "dictionary", bm)

@@ -1,0 +1,8 @@
+    Face pyramids OK.
+    Max skewness = 2.0832084 OK.
+    Coupled point location match (average 0) OK.
+Failed 1 mesh checks.
+iter 1: spinta T=6.983168e-06  resistenza (corpo+carena) D=7.094706e-06  <Ux>disco=1.10352468e+00
+iter 2: spinta T=7.094706e-06  resistenza (corpo+carena) D=7.066561e-06  <Ux>disco=1.10490104e+00
+iter 3: spinta T=7.066561e-06  resistenza (corpo+carena) D=7.063053e-06  <Ux>disco=1.10343012e+00
+esportato v3_carena_F tempo 5600

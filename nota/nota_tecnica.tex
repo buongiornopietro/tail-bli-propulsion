@@ -1,3 +1,4 @@
+% Technical note -- version 3 draft (2026-09-30): comparison with the Delft experiment added.
 % Technical note -- version 2 (2026-09-25, after preprint v1 doi:10.5281/zenodo.22952930):
 % abstract ratios and equal-area saving aligned with the tables; transition criterion of Table 1
 % stated (Michel) with the e^N sensitivity; references for prior shape optimisation and methods.
@@ -29,7 +30,7 @@
 \title{Optimal streamlined bodies and the practical limits of tail-mounted
 boundary-layer-ingesting propulsion: a reduced-order and RANS study}
 \author{Pietro Buongiorno}
-\date{September 2026}
+\date{October 2026}
 
 \begin{document}
 \maketitle
@@ -48,14 +49,15 @@ axisymmetric golden-ratio bodies have 2.4--3.6 times the drag of the optimum (a 
 times), in agreement with Hoerner's classical data and with earlier optimisation studies.
 For a fully turbulent boundary layer the reduced-order model gives a break-even duct loss
 $K^*$ that decreases from 8.5\% to 4.5\% of the free-stream dynamic pressure as $\ReV$ goes
-from $3\times10^5$ to $10^8$. RANS simulations at $\ReV=10^6$ confirm the BLI gain: an
+from $3\times10^5$ to $10^8$. RANS simulations at $\ReV=10^6$ (and $10^7$ for selected cases) confirm the BLI gain: an
 unducted actuator disc ingesting the boundary layer needs $8\%$ less power than the bare
 body pushed by an ideal propeller of infinite disc area, and $15\%$ less than with an
 isolated propeller of the same disc area. A flush wall slot loses essentially all the
 ingested total pressure ($K\approx0.8$--$1.0$). A well-designed ducted intake with a rounded
 lip keeps the intake loss at $K\approx2\%$, yet its self-propelled power ranges from $2\%$
 below to $9\%$ above that of the conventional reference, depending on the size of the
-reference propeller: the cowl skin friction, the altered afterbody pressure and the
+reference propeller; the best of four cowls tested (shorter and thinner) lowers this to
+between $-6\%$ and $+4\%$: the cowl skin friction, the altered afterbody pressure and the
 acceleration of the ingested flow cancel most or all of the BLI benefit. The ideal BLI gain
 and realistic installation penalties are of the same order, which explains the mixed
 experimental record of Goldschmied-type bodies.
@@ -130,7 +132,8 @@ $5^\circ$ wedge (case generators \texttt{cfd\_caso.py}, \texttt{cfd\_blockmesh.p
 \texttt{cfd\_gold.py}, \texttt{cfd\_carena.py}). The body is the turbulent optimum at
 $\ReV=10^6$ ($\ReL=4.95\times10^6$, $L/D=6.47$). Lengths are scaled by $L$, velocities by
 $U$, forces are reported per wedge in units of $\rho U^2L^2$. The wall is resolved without wall functions: on the body the
-area-averaged $y^+$ of the first cell is 0.32--0.43 and the maximum 0.54--0.89 in all cases;
+area-averaged $y^+$ of the first cell is 0.32--0.43 and the maximum 0.54--0.89 in all cases at
+$\ReV=10^6$ (at $10^7$ the first cell was rescaled to keep the same $y^+$, not measured);
 on the cowl of the ducted case the average is 1.45 and the maximum 2.5.
 The grid refinement of Sec.~\ref{sec:grid} increased the cell count in all directions but kept the
 first-cell height, so $y^+$ is unchanged on the fine grids; a 5\% error on the cowl skin
@@ -138,7 +141,7 @@ friction would change the ducted power by about 0.8 points.
 
 \emph{Inflow turbulence and tripping.} With low free-stream turbulence
 ($k=1.5\times10^{-6}$, $\omega=10$) the SST model stayed laminar over the whole body and
-produced a spurious 45\% power saving. All cases reported here therefore use
+produced a spurious 45\% power saving. Unless stated otherwise, all cases reported here use
 $\omega_\infty=1.5$ ($\nu_t/\nu=5$) and a trip region ($k=0.005$, $\omega=100$ for
 $0.03<x<0.08$). The eddy-viscosity distribution along the body was checked against the
 bare-body reference in every case (\texttt{nut\_x.py}).
@@ -168,7 +171,14 @@ Configurations: (a) bare body; (b) free actuator disc at $0.895\le x\le0.905$, r
 $0.03$; (c) flush wall suction slot (Goldschmied type), slot widths $0.006$--$0.024$;
 (d) ducted intake with an annular NACA-type cowl (leading edge at $x=0.855$, chord $0.095$,
 thickness 5\%, mean radius $0.0293\to0.0249$; intake, fan and exit areas $2.54$, $1.91$,
-$1.89\times10^{-3}\,L^2$) with the disc inside the duct.
+$1.89\times10^{-3}\,L^2$) with the disc inside the duct. The equal-area references below use
+the effective disc area $Q/\langle u\rangle$: $2.79\times10^{-3}$ for the free disc (geometric
+$2.83\times10^{-3}$) and $1.94\times10^{-3}$ for the ducted fan (geometric $1.91\times10^{-3}$). Three further cowls change one
+parameter each (\texttt{genera\_v3.py}): (e) chord $0.070$ and thickness 4\%; (f) mean
+radius $0.0293\to0.0275$ (less convergent duct); (g) $0.0293\to0.0290$ (nearly constant
+section). A second Reynolds number, $\ReL=4.95\times10^7$ ($\ReV\approx10^7$), was computed
+for the bare body, the free disc and cowl (d) on the same body, with the first-cell height
+rescaled for $y^+<1$ and $\omega_\infty=15$ to keep $\nu_t/\nu=5$ at the inflow.
 
 % ------------------------------------------------------------------
 \section{Results}
@@ -289,9 +299,49 @@ with matching pressure distribution (Fig.~\ref{fig:cfdconv}). With the free actu
 in self-propulsion, the ideal shaft power is $8.2\%$ lower than $P_{\rm conv}$ for an ideal
 propeller, and $15.3\%$ lower than for an isolated propeller of the same disc area
 ($A=2.79\times10^{-3}L^2$, Table~\ref{tab:ref}). The disc
-ingests the inner part of the boundary layer (mean axial velocity at the disc $0.89\,U$)
-and the measured intake loss is $K\approx0\pm1\%$. This is the ideal BLI benefit at this
+ingests the inner part of the boundary layer (mean axial velocity at the disc $0.89\,U$),
+the required thrust is $T/D_{\rm bare}=1.03$ (the disc raises the body drag by 3\%), and the
+measured intake loss is $K\approx0\pm1\%$. This is the ideal BLI benefit at this
 Reynolds number within RANS; $8.2\%$ is its lower bound.
+
+\subsection{Comparison with the Delft experiment}\label{sec:delft}
+Della Corte et al.\ \cite{dellacorte2021} measured with PIV the power balance of an
+axisymmetric fuselage ($L/D\approx11$, boundary layer tripped at 5\% of the length) with and
+without an aft-mounted shrouded fan; the PIV used for the power balance was taken at 20~m/s,
+$\ReL\approx2.4\times10^6$ (campaign $1.7$--$4.7\times10^6$). For the bare fuselage they found that
+the mechanical energy deposited in the flow at the trailing edge, $C_{\dot E}$ (their Eq.~10:
+axial, radial and tangential kinetic energy plus pressure work, $\dot E_a+\dot E_v+\dot E_p$ in
+Drela's notation \cite{drela2009}), is about 13\% of the momentum-deficit power $F_xU$ at the same
+station; this is the ideal BLI benefit, the part of the losses a propulsor could still recover.
+The same quantity from our bare-body RANS solution at $\ReL=4.95\times10^6$, about twice the
+experimental value (\texttt{delft\_confronto.py}; momentum balance closed to within 3\%), is
+$9.9\%$ at the trailing edge: the kinetic terms give $11.7\%$ of $DU$ and the pressure work
+$-2.1\%$ (Table~\ref{tab:delft}). The experimental value is higher, as expected for a lower
+Reynolds number and a relatively thicker boundary layer, and the two agree in order of
+magnitude on different bodies ($L/D=6.5$ against 11). Two observations agree qualitatively: the
+operating fan increases the momentum deficit upstream of the shroud by about 10\% in the
+experiment, and our body drag rises by about 3\% with the free disc and 4\% with the cowl
+(Table~\ref{tab:budget}); and in the experiment about 30\% of $\delta_{99}$ is not ingested,
+while in our free-disc case the outer part of the boundary layer also passes outside the disc.
+Our free disc recovers 8.2\% of the 9.9\% available, i.e.\ most of it; the saving against an
+equal-area propeller (15\%) can exceed the wake energy because it also contains the jet loss
+of the reference propeller.
+
+\begin{table}[h]\centering
+\caption{Mechanical energy deposited in the flow behind the bare body (kinetic terms and
+pressure work, as in Della Corte et al.'s Eq.~10), at the trailing edge unless stated: RANS
+(this work) and experiment \cite{dellacorte2021}.}\label{tab:delft}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\toprule
+ & $L/D$ & $\ReL$ & $(\dot E_a+\dot E_v)/(DU)$ & $\dot E/(F_xU)$\\
+\midrule
+Della Corte et al.\ (PIV) & $\approx11$ & $\approx2.4\times10^6$ & -- & $\approx13\%$\\
+This work (RANS, $x=1.0$) & 6.5 & $4.95\times10^6$ & $11.7\%$ & $9.9\%$\\
+This work (RANS, $x=1.05$ / $1.2$) & 6.5 & $4.95\times10^6$ & $10.8\%$ / $9.1\%$ & $9.7\%$ / $8.8\%$\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{RANS: flush wall slot}
 A flush suction slot gives $K\approx0.84$--$1.02$ for slot widths $0.006$--$0.012$ (and
@@ -306,7 +356,7 @@ consistent with the Cal Poly wind-tunnel results \cite{roepke2012}.
 \subsection{RANS: ducted intake with a rounded lip}
 A first cowl design (intake area $3.4\times10^{-3}$, lip thickness 8\%) produced separation
 and reversed flow ahead of the intake, with oscillating forces: the intake was too large
-for the available boundary-layer flow. The final design (Sec.~2.4, case D) is attached
+for the available boundary-layer flow. The final design (Sec.~2.4, cowl (d)) is attached
 (Fig.~\ref{fig:carena}) and has $K=2.1\%$, well below $K^*$. Nevertheless the
 self-propelled power is $9.2\%$ \emph{higher} than $P_{\rm conv}$ for an ideal propeller.
 Against an isolated propeller of the same area as the fan ($A=1.94\times10^{-3}L^2$) it is
@@ -333,7 +383,7 @@ Power $P/P_{\rm conv}$ (ideal propeller) & $1.092$\\
 \begin{table}[h]\centering
 \caption{Self-propelled power of the BLI configurations relative to the bare body pushed by
 an isolated propeller of disc area $A_{\rm ref}$ (Eq.~\ref{eq:pconv}; base grid). Fine grid,
-equal-area references: free disc $-15.2\%$, ducted $-1.4\%$.}\label{tab:ref}
+equal-area references: free disc $-15.2\%$, ducted $-1.4\%$ to $-1.7\%$.}\label{tab:ref}
 \begin{tabular}{lccc}
 \toprule
 Reference propeller & $A_{\rm ref}/L^2$ & Free disc & Ducted intake\\
@@ -353,11 +403,64 @@ size, which also carries cowl friction; it has not been computed.
 The duct accelerates the ingested flow to $1.01\,U$, so the fan no longer works on slow
 fluid and the BLI benefit disappears. A simple estimate with the same cowl and a fan
 velocity of $0.89\,U$ gives $P/P_{\rm conv}\approx0.96$ ($-4\%$ against the ideal
-propeller); this has not been computed.
+propeller).
+
+\emph{Other cowls.} Table~\ref{tab:cowls} compares the four cowls
+(\texttt{misura\_v3.py}; $\nu_t$ along the body turbulent in all cases). The shorter and
+thinner cowl (e) is the best: the fan sees $0.97\,U$ instead of $1.01\,U$ and the power
+drops by 5 points, to $+4.3\%$ against the ideal propeller and $-6.2\%$ against an
+equal-area one. Opening the exit, cowls (f) and (g), has the opposite effect to the one
+intended: the convergent exit acts as a throttle, and widening it draws more flow through
+the duct and accelerates the fan inflow to $1.10$--$1.16\,U$, so the power rises to
+$+12$--$15\%$. To make the fan see slower fluid the exit must be narrower, or the fan larger
+for the same exit (not computed). The intake loss stays at 1.8--3.1\% for all cowls, well below $K^*$: the
+penalty comes from cowl friction and fan inflow speed, not from the intake.
+
+\begin{table}[h]\centering
+\caption{Ducted configurations in self-propulsion at $\ReV=10^6$ (base grid). Power relative
+to the bare body with an ideal propeller and with an isolated propeller of the same effective
+disc area $A$ (Eq.~\ref{eq:pconv}).}\label{tab:cowls}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Cowl & $K$ & fan inflow & $T/D_{\rm bare}$ & $A\times10^3$ & vs ideal & vs equal area\\
+\midrule
+(d) reference & 2.1\% & $1.01\,U$ & 1.080 & 1.94 & $+9.2\%$ & $-2.1\%$\\
+(e) chord 0.070, 4\% & 1.8\% & $0.97\,U$ & 1.080 & 2.00 & $+4.3\%$ & $-6.2\%$\\
+(f) exit radius 0.0275 & 2.7\% & $1.10\,U$ & 1.016 & 2.12 & $+12.1\%$ & $+1.2\%$\\
+(g) exit radius 0.0290 & 3.1\% & $1.16\,U$ & 0.991 & 2.22 & $+14.9\%$ & $+4.3\%$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Effect of Reynolds number}\label{sec:re}
+At $\ReL=4.95\times10^7$ the bare-body drag per wedge falls to $4.911\times10^{-6}$ ($-29\%$).
+The free disc saves $6.7\%$ of the power against an ideal propeller and $11.9\%$ against an
+equal-area propeller, against $8.2\%$ and $15.3\%$ at $\ReL=4.95\times10^6$: the boundary layer
+is relatively thinner and carries less momentum deficit, the same trend as $K^*$ in
+Table~\ref{tab:kstar}. The ducted case (d) did not converge at this Reynolds number: with a
+damped thrust update the thrust--drag mismatch stayed at 2--3\% and the drag kept falling by about
+1.4\% every 800 iterations, so the flow itself had not settled; it is not reported. Its eddy
+viscosity along the body matches the bare body at the same Reynolds number but is three times
+lower at $x=0.75$ than in a first, undamped attempt, a reminder of the bistability of the SST
+solution (Sec.~\ref{sec:grid}). The bare-body and free-disc values at this Reynolds number are
+converged (drag change below 0.01\% over the last 400 iterations) and turbulent along the body.
 
 \subsection{Grid independence}\label{sec:grid}
 On the refined grid the drag and the self-propelled powers change by less than one
-percentage point, and the intake losses by at most 1.1 points (Table~\ref{tab:grid}). Two fine-grid runs (the ducted case with the standard inflow
+percentage point, and the intake losses by at most 1.1 points (Table~\ref{tab:grid}). A third,
+coarser grid (factor $1/\sqrt2$) gives a monotonic sequence for the bare-body drag,
+and a grid error of at most 0.5\% (grid convergence index with safety factor 1.25
+\cite{celik2008}). Over the last 400 iterations the drag changed by less than
+0.01\% on the coarse and base grids but by $-0.15\%$ on the fine grid (\texttt{deriva\_v3.py}),
+with about 0.1\% still to go; the observed order (between 1.2 and about 4.7 depending on the
+final fine-grid value) and the Richardson estimate ($6.963$--$7.001\times10^{-6}$) are therefore
+indicative only, while the bound of 0.5\% holds for all plausible values, and is smaller than
+the differences between configurations discussed in this note. The free-disc power changes non-monotonically within one point
+($-7.3$, $-8.2$, $-8.1\%$). The ducted case diverged on the coarse grid, whose cells around the
+cowl are of poorer quality, and is not reported; for it only the base and fine grids are
+available, and the fine-grid ducted drag was still falling by 0.13\% over its last 400
+iterations, so its power could drop by a further 0.1--0.2 points. Two fine-grid runs (the ducted case with the standard inflow
 settings, and the bare body with $\omega_\infty=0.3$ and a longer trip) converged instead
 to a spurious laminar state: the eddy viscosity decayed along the body and, in the ducted
 case, the laminar boundary layer separated at $0.54<x<0.70$. The SST solution is therefore
@@ -368,24 +471,25 @@ body matches the base-grid case, and it is referred to the fine-grid bare body c
 the standard settings. Self-propulsion was not fully converged (thrust and drag differ by
 0.3\%); with $T=D$ the power change would be about $+9.7\%$.
 \begin{table}[h]\centering
-\caption{Grid sensitivity (refinement factor $\sqrt2$ per direction; powers against the
+\caption{Grid sensitivity (factor $\sqrt2$ per direction between grids; powers against the
 ideal propeller).}\label{tab:grid}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-Quantity & base grid & fine grid & change\\
+Quantity & coarse grid & base grid & fine grid & base$\to$fine\\
 \midrule
-Bare-body drag ($\times10^{-6}$) & 6.957 & 6.969--6.973 & $+0.2\%$\\
-Free disc: $P/P_{\rm conv}-1$ & $-8.2\%$ & $-8.1\%$ & 0.15 points\\
-Free disc: $K$ & $0.5\%$ & $-0.6\%$ & 1.1 points\\
-Ducted: $P/P_{\rm conv}-1$ & $+9.2\%$ & $+9.7$ to $+10.0\%$ & 0.5--0.8 points\\
-Ducted: $K$ & $2.1\%$ & $2.0\%$ & 0.1 points\\
+Bare-body drag ($\times10^{-6}$) & 6.934 & 6.957 & 6.966--6.973 & $+0.2\%$\\
+Free disc: $P/P_{\rm conv}-1$ & $-7.3\%$ & $-8.2\%$ & $-8.1\%$ & 0.15 points\\
+Free disc: $K$ & $-1.0\%$ & $0.5\%$ & $-0.6\%$ & 1.1 points\\
+Ducted: $P/P_{\rm conv}-1$ & -- & $+9.2\%$ & $+9.7$ to $+10.0\%$ & 0.5--0.8 points\\
+Ducted: $K$ & -- & $2.1\%$ & $2.0\%$ & 0.1 points\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 % ------------------------------------------------------------------
 \section{Discussion}
-The ideal BLI benefit (8--18\% in RANS for this body depending on the reference propeller,
+The ideal BLI benefit (8--15\% in RANS for this body at $\ReV=10^6$ depending on the reference
+propeller, 6.7--11.9\% at $10^7$;
 17--20\% in the reduced-order model, which optimises the shape jointly with the intake) is of
 the same order as the losses of a realistic installation. The difficulty is intrinsic: for the fan to see slow
 fluid the duct must diffuse, but a thick turbulent boundary layer that is further
@@ -397,15 +501,17 @@ struggled to reproduce the large savings originally reported.
 \paragraph{Limitations.}
 (1) Axisymmetric, steady RANS with a single turbulence model; no free-stream turbulence
 effects beyond the trip. (2) Ideal actuator disc: no blade losses, swirl or
-fan--distortion interaction. (3) A single cowl geometry was tested in RANS; the $-4\%$
-estimate for a diffusing duct is not a computed result. (4) Laminar/transitional branch
-unresolved. (5) One Reynolds number in RANS ($\ReV=10^6$). (6) The SST solution can fall into a
+fan--distortion interaction. (3) Four cowl geometries were tested, each changing one parameter;
+no systematic cowl optimisation was made. (4) Laminar/transitional branch
+unresolved. (5) Two Reynolds numbers in RANS ($\ReV\approx10^6$ and $10^7$), on a single body; the
+ducted case did not converge at the higher one. (6) The SST solution can fall into a
 spurious laminar state (Sec.~\ref{sec:grid}); every result was screened for it, but the screening is
 a posteriori. (7) The conventional reference is an isolated propeller that does not interact
 with the body; the power changes depend on its assumed size (Table~\ref{tab:ref}).
-(8) The grid study uses two grids with the same first-cell height; no third grid or
-wall-resolution study was made. (9) The RANS results are compared with the reduced-order
-model but not with independent experimental data.
+(8) The grid study uses three grids (two for the ducted case) with the same first-cell
+height; no wall-resolution study was made. (9) The only comparison with experiment
+(Sec.~\ref{sec:delft}) concerns the bare-body wake energy, on a different body; the
+powered configurations are not validated against measurements.
 
 \section{Conclusions}
 \begin{enumerate}
@@ -417,15 +523,17 @@ $\ReV=10^6$ they can be 18\% faster or 7\% slower than the turbulent optimum dep
 on the free-stream disturbances; a shape designed for the worst case guarantees only
 about 3\%, and nothing above $\ReV\approx10^7$.
 \item For turbulent boundary layers, tail BLI pays only if the duct loses less than
-$K^*=4.5$--$8.5\%$ of the dynamic pressure (against an ideal propeller; a conservative
-threshold).
+$K^*=4.5$--$8.5\%$ of the dynamic pressure (conservative with respect to the reference
+propeller; reduced-order model, not validated in RANS).
 \item A flush wall slot loses almost all the ingested total pressure and cannot pay.
-\item An unducted tail propulsor ingesting the boundary layer saves 8--18\% of the power,
-depending on the size of the conventional propeller it is compared with.
+\item An unducted tail propulsor ingesting the boundary layer saves 8--15\% of the power at
+$\ReV=10^6$ (6.7--11.9\% at $10^7$), depending on the size of the conventional propeller it is
+compared with.
 \item A clean ducted intake ($K=2\%$) is achievable, but cowl friction and flow
 acceleration cancel most or all of the benefit (power between $-2\%$ and $+9\%$ of the
-conventional reference). Recovering a clear net gain requires a duct that diffuses without
-separating; this is the open design problem.
+conventional reference); a shorter, thinner cowl brings it to between $-6\%$ and $+4\%$,
+and widening the duct exit makes it worse. Recovering a clear net gain requires a fan that
+sees slow fluid without a long, high-friction cowl; this is the open design problem.
 \end{enumerate}
 
 \section*{Use of AI tools}
@@ -458,6 +566,9 @@ Slot loss $K$ & \texttt{misura\_K.py}\\
 Table~\ref{tab:budget}, Fig.~\ref{fig:carena} & \texttt{misura\_carena.py}, \texttt{plot\_carena.py}\\
 Table~\ref{tab:ref} & \texttt{confronto\_elica.py}\\
 Table~\ref{tab:grid} & \texttt{misura\_fine.py}\\
+Table~\ref{tab:delft} & \texttt{delft\_confronto.py}\\
+Table~\ref{tab:cowls}, Sec.~\ref{sec:re}, third grid & \texttt{genera\_v3.py} (cases), \texttt{misura\_v3.py}\\
+Iterative drift (Sec.~\ref{sec:grid}) & \texttt{deriva\_v3.py}\\
 $\nu_t$ check along the body & \texttt{nut\_x.py}\\
 \bottomrule
 \end{tabular}
@@ -490,7 +601,7 @@ shown for information only (not a result).}\label{fig:mappa}
 \end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=0.9\linewidth]{carena_flusso_en.png}
-\caption{Flow near the tail with the ducted intake (case D).}\label{fig:carena}
+\caption{Flow near the tail with the ducted intake (cowl (d)).}\label{fig:carena}
 \end{figure}
 
 \begin{thebibliography}{99}
@@ -538,5 +649,8 @@ engineering applications, \emph{AIAA J.} 32(8):1598--1605, 1994, doi:10.2514/3.1
 \bibitem{langtry2009} R.~B. Langtry, F.~R. Menter, Correlation-based transition modeling
 for unstructured parallelized CFD codes, \emph{AIAA J.} 47(12):2894--2906, 2009,
 doi:10.2514/1.42362.
+\bibitem{celik2008} I.~B. Celik, U.~Ghia, P.~J. Roache, C.~J. Freitas, H.~Coleman, P.~E. Raad,
+Procedure for estimation and reporting of uncertainty due to discretization in CFD
+applications, \emph{J. Fluids Eng.} 130(7):078001, 2008, doi:10.1115/1.2960953.
 \end{thebibliography}
 \end{document}

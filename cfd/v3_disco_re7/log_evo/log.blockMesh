@@ -1,0 +1,96 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : blockMesh
+Date   : Oct 09 2026
+Time   : 04:55:12
+Host   : "EVO-X2"
+PID    : 38030
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_disco_re7
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Reading "blockMeshDict"
+
+Creating block mesh from
+    "system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+
+Basic statistics
+    Number of internal faces : 2
+    Number of boundary faces : 14
+    Number of defined boundary faces : 14
+    Number of undefined boundary faces : 0
+
+Checking topology
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.00071967646 .. 0.0051688147
+        j : 6.1740145e-07 .. 0.27845467 6.1735766e-07 .. 0.27843492 6.1740145e-07 .. 0.27845467 6.1735766e-07 .. 0.27843492 
+        k : 0 6.2760018e-05 0 6.27602e-05 
+    Block 1 cell size :
+        i : 0.0080557591 .. 0.001013175
+        j : 5.9942306e-07 .. 0.27034622 5.9956372e-07 .. 0.27040967 5.9942306e-07 .. 0.27034622 5.9956372e-07 .. 0.27040967 
+        k : 0.0067387575 0.0067366382 0.0067388098 0.0067366905 
+    Block 2 cell size :
+        i : 0.0041138389 .. 0.16455356
+        j : 6.1740145e-07 .. 0.27845467
+        k : 0 0 5.3861346e-08 5.3861346e-08 
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #13639 with centre (0.32889606 3.8248461 -0.16699639) the normal (5.0310916e-08 -0.043619387 -0.99904822) differs from the average normal (1.6136166e-10 -0.043619387 -0.99904822) by 2.5149823e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #13639 with centre (0.32889606 3.8248461 0.16699639) the normal (5.0310915e-08 -0.043619387 0.99904822) differs from the average normal (1.6136167e-10 -0.043619387 0.99904822) by 2.5149822e-15
+
+
+No patch pairs to merge
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (-4 0 -0.17447755) (8 3.9961929 0.17447755)
+  nPoints: 97630
+  nCells: 48400
+  nFaces: 193880
+  nInternalFaces: 96250
+----------------
+Patches
+----------------
+  patch 0 (start: 96250 size: 280) name: corpo
+  patch 1 (start: 96530 size: 440) name: esterno
+  patch 2 (start: 96970 size: 110) name: uscita
+  patch 3 (start: 97080 size: 48400) name: front
+  patch 4 (start: 145480 size: 48400) name: back
+  patch 5 (start: 193880 size: 0) name: defaultFaces
+
+End
+

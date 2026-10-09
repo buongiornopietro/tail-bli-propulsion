@@ -1,0 +1,113 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  14
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 14-7b05503f98a8
+Exec   : reconstructPar -latestTime
+Date   : Oct 09 2026
+Time   : 03:45:47
+Host   : "EVO-X2"
+PID    : 28518
+I/O    : uncollated
+Case   : /home/buongiornopietro/cfd/v3_carena_F
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #16809 with centre (0.85499834 0.029487191 -0.0012874386) the normal (5.8406457e-09 -0.043619303 -0.99904823) differs from the average normal (-3.139898e-11 -0.043619387 -0.99904822) by 7.1332002e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #16809 with centre (0.85499834 0.029487191 0.0012874386) the normal (5.8406457e-09 -0.043619303 0.99904823) differs from the average normal (-3.1398981e-11 -0.043619387 0.99904822) by 7.1332002e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #3900 with centre (0.016095626 0.023809429 -0.0010395421) the normal (1.6276513e-08 -0.04361941 -0.99904822) differs from the average normal (-4.8287038e-13 -0.043619387 -0.99904822) by 7.884741e-16
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #3900 with centre (0.016095626 0.023809429 0.0010395421) the normal (1.6276513e-08 -0.04361941 0.99904822) differs from the average normal (-4.8287035e-13 -0.043619387 0.99904822) by 7.8847409e-16
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #31345 with centre (0.97514969 3.7726615 -0.16471796) the normal (-5.0713672e-08 -0.043619387 -0.99904822) differs from the average normal (4.6927735e-11 -0.043619387 -0.99904822) by 2.5767153e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #31345 with centre (0.97514969 3.7726615 0.16471796) the normal (-5.0713672e-08 -0.043619387 0.99904822) differs from the average normal (4.6927734e-11 -0.043619387 0.99904822) by 2.5767153e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #3983 with centre (0.99954943 3.7656016 -0.16440972) the normal (-5.2116015e-08 -0.043619387 -0.99904822) differs from the average normal (-5.1790642e-12 -0.043619387 -0.99904822) by 2.7155464e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #3983 with centre (0.99954943 3.7656016 0.16440972) the normal (-5.2116016e-08 -0.043619387 0.99904822) differs from the average normal (-5.1790647e-12 -0.043619387 0.99904822) by 2.7155465e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'front' may not be sufficiently planar
+At patch face #51555 with centre (0.85508122 0.029480615 -0.0012871514) the normal (6.1748661e-09 -0.043619307 -0.99904823) differs from the average normal (2.2406854e-12 -0.043619387 -0.99904822) by 6.5130458e-15
+
+--> FOAM Warning: 
+    From function virtual void Foam::wedgePolyPatch::calcGeometry(Foam::PstreamBuffers&)
+    in file meshes/polyMesh/polyPatches/constraint/wedge/wedgePolyPatch.C at line 231
+    Wedge patch 'back' may not be sufficiently planar
+At patch face #51555 with centre (0.85508122 0.029480615 0.0012871514) the normal (6.1748661e-09 -0.043619307 0.99904823) differs from the average normal (2.2406835e-12 -0.043619387 0.99904822) by 6.5130457e-15
+
+Time = 5600s
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        total(p)
+        nut
+        p
+        k
+        omega
+        yPlus
+
+    Reconstructing volVectorFields
+
+        wallShearStress
+        U
+
+    Reconstructing surfaceScalarFields
+
+        phi
+
+Reconstructing point fields
+
+    (no point fields)
+
+Collecting uniform files
+
+End
+

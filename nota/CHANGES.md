@@ -1,6 +1,6 @@
 # Changes to the technical note
 
-## Version 3 (2026-10)
+## Version 3 (2026-10-10, preprint doi:10.5281/zenodo.23272235)
 
 Relative to preprint v2 (doi:10.5281/zenodo.22955086). New RANS cases computed on a second PC with the
 same OpenFOAM 14 settings (a v2 case repeated there reproduced the drag to all printed digits).

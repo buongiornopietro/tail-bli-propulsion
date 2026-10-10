@@ -38,6 +38,7 @@ the note (translation table in `en_fig.py`), e.g. `FIG_EN=1 python plot_axi.py`.
 | Version 3: Delft comparison (wake energy) | `python delft_confronto.py` | `cfd/conv_ref` | `out/delft_confronto.json` |
 | Version 3: cowls (e)-(g), coarse grid, Re x10 | `python misura_v3.py` | `cfd/v3_*` | `out/misura_v3.json` |
 | Version 3: iterative drift of the drag | `python deriva_v3.py v3_conv_rada v3_conv_re7 ...` | `cfd/v3_*/postProcessing/forze` | printed |
+| Journal version: naval quantities (t, w_T, eta_H, eta_O, eta_D), reduced model on the RANS body | `python rivista_navale.py` | `out/cfd_profili.json`, `out/misura_carena.json`, `out/misura_v3.json`, `cfd/conv_ref` | `out/rivista_navale.json` |
 
 Checked on 2026-09-24: the four measurement scripts reproduce the saved JSON files exactly,
 and the figures above are regenerated from the saved data.

@@ -1,5 +1,14 @@
 # Changes to the technical note
 
+## Code release v1.3.0 (journal version, 2026-10-10)
+
+New script `rivista_navale.py` (output `out/rivista_navale.json`) for the version submitted to Ocean
+Engineering: thrust deduction, effective wake fraction by thrust identity for an ideal actuator disc,
+hull, open-water and propulsive efficiencies of the self-propelled RANS cases (free disc: t 0.030,
+w_T 0.214, eta_H 1.23, eta_O 0.88, eta_D 1.09); nominal wake over the disc volume (0.24); reduced-order
+model on the RANS body with the RANS disc flow rate (9.4-11.1% against 8.2% in RANS) and with the whole
+boundary layer ingested (13.8-15.4%). Post-processing only; no RANS result changed.
+
 ## Version 3 (2026-10-10, preprint doi:10.5281/zenodo.23272235)
 
 Relative to preprint v2 (doi:10.5281/zenodo.22955086). New RANS cases computed on a second PC with the

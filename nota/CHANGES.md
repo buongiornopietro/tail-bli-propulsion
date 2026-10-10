@@ -1,6 +1,6 @@
 # Changes to the technical note
 
-## Code release v1.3.0 (journal version, 2026-10-10)
+## Code release v1.3.0 (journal version, 2026-10-10, doi:10.5281/zenodo.23281153)
 
 New script `rivista_navale.py` (output `out/rivista_navale.json`) for the version submitted to Ocean
 Engineering: thrust deduction, effective wake fraction by thrust identity for an ideal actuator disc,

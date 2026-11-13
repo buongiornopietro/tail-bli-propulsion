@@ -148,8 +148,10 @@ def Retheta_crit(H):
 def indice_transizione(s, Ue, th, lam, nu, Rex_max=None, criterio=None, Tu=None):
     """Indice di transizione lungo la marcia laminare.
 
-    criterio "eN": si integra dn/ds = (dn/dRe_theta)(H) dRe_theta/ds dove
+    criterio "eN": Drela e Giles (1987), dn/ds = (dn/dRe_theta)(H) (m(H)+1)/2 l(H) / theta dove
     Re_theta supera il valore critico; transizione quando n raggiunge N(Tu).
+    (11/11/2026, revisione: prima si usava dRe_theta/ds effettivo al posto di (m+1)/2 l / theta,
+    uguale sulla lastra piana ma non su un corpo il cui raggio cresce.)
     Il distacco laminare (Thwaites lambda < -0.09) e il tetto Re_x restano
     come innesco aggiuntivo.
     """
@@ -162,8 +164,9 @@ def indice_transizione(s, Ue, th, lam, nu, Rex_max=None, criterio=None, Tu=None)
         trig = Reth > 1.174 * (1 + 22400 / Rex) * Rex**0.46
     else:
         H = thwaites_H(lam)
-        amp = (Reth > Retheta_crit(H)) & (np.gradient(Reth, s) > 0)
-        dn = np.where(amp, dn_dRetheta(H) * np.gradient(Reth, s), 0.0)
+        l = (6.54 * H - 14.07) / H**2
+        ml = 0.058 * (H - 4)**2 / (H - 1) - 0.068          # m(H) l(H)
+        dn = np.where(Reth > Retheta_crit(H), dn_dRetheta(H) * np.maximum((ml + l) / 2, 0.0) / th, 0.0)
         n = np.concatenate([[0], np.cumsum(0.5 * (dn[1:] + dn[:-1]) * np.diff(s))])
         trig = n >= n_crit(Tu)
     cand = np.flatnonzero((trig | (lam < -0.09) | (Rex > Rex_max)) & (s > s0))

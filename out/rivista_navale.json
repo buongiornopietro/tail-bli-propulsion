@@ -76,6 +76,17 @@
    "eta_O": 0.9208098680482024,
    "eta_D": 1.0715888327047864,
    "P_su_Pconv": 0.933193748833599
+  },
+  {
+   "caso": "carenatura D, Re x10",
+   "A": 0.0019356836814823114,
+   "t": 0.12878344385193696,
+   "w_tot": 0.018784471999999997,
+   "w_T": 0.12563000181598805,
+   "eta_H": 0.9963934695352101,
+   "eta_O": 0.8911090104395616,
+   "eta_D": 0.8878951986459626,
+   "P_su_Pconv": 1.126259046703932
   }
  ],
  "w_nominale": 0.2384086145603046,
@@ -87,27 +98,27 @@
  "D3": [
   {
    "xs": 0.85,
-   "Q_su_QBL": 0.6239388374724391,
+   "Q_su_QBL": 0.6239388374724427,
    "penalita_su_Cconv": 0.0,
-   "risparmio_senza_penalita": 11.07253358628919,
-   "risparmio_con_penalita": 11.07253358628919,
-   "risparmio_QBL_senza_penalita": 15.382986836145673
+   "risparmio_senza_penalita": 7.104469138626079,
+   "risparmio_con_penalita": 7.104469138626079,
+   "risparmio_QBL_senza_penalita": 13.501510288340357
   },
   {
    "xs": 0.88,
-   "Q_su_QBL": 0.6442922633028666,
-   "penalita_su_Cconv": 496.8855273947717,
-   "risparmio_senza_penalita": 9.44111141732079,
-   "risparmio_con_penalita": -487.44441597745094,
-   "risparmio_QBL_senza_penalita": 14.365356274562124
+   "Q_su_QBL": 0.6442922633028701,
+   "penalita_su_Cconv": 496.8855273947703,
+   "risparmio_senza_penalita": 7.329843373406342,
+   "risparmio_con_penalita": -489.5556840213639,
+   "risparmio_QBL_senza_penalita": 13.298420526016486
   },
   {
    "xs": 0.9,
-   "Q_su_QBL": 0.6887882562542346,
-   "penalita_su_Cconv": 1705.1542853350277,
-   "risparmio_senza_penalita": 9.467936538981292,
-   "risparmio_con_penalita": -1695.6863487960466,
-   "risparmio_QBL_senza_penalita": 13.804201600971878
+   "Q_su_QBL": 0.6887882562542356,
+   "penalita_su_Cconv": 1705.154285335023,
+   "risparmio_senza_penalita": 8.126557783347387,
+   "risparmio_con_penalita": -1697.0277275516753,
+   "risparmio_QBL_senza_penalita": 13.207597410241178
   }
  ]
 }

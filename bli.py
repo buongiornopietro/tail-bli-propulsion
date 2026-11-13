@@ -25,6 +25,9 @@ from scipy.interpolate import CubicSpline
 import axi
 
 PERDITA = "U"   # "U": K·½ρU²·Q   |   "Ue": K·½ρUe²·Q (velocità locale a monte della fessura)
+E_MAX = 0.0
+TH_INF_MAX = 0.0    # massimo lungo la marcia di r θ Ue^((H+5)/2) (Young), revisione dell'11/11/2026
+PHI_MODE = "lineare"   # ingestione parziale: "lineare" (campione medio dello strato limite) | "profilo" (strato interno)
 
 
 # ------------------------------------------------ flusso potenziale con aspirazione
@@ -135,6 +138,9 @@ def march(s, Ue, dUe, R, dR, nu, transition, theta0=None, Rex_max=None):
         H = float(axi.H_of_H1(H1))
         if H > 2.4 or not np.isfinite(theta):
             return theta, min(H, 2.4), i + 1, itr
+        global E_MAX, TH_INF_MAX
+        E_MAX = max(E_MAX, 0.5 * Ue[i + 1]**3 * float(Hstar(H)) * theta * 2 * np.pi * R[i + 1])
+        TH_INF_MAX = max(TH_INF_MAX, R[i + 1] * theta * Ue[i + 1] ** ((H + 5) / 2))
     return theta, H, None, itr
 
 
@@ -182,7 +188,10 @@ def power(x, r, ReV, transition, xs_frac, Q, x_end=None, detail=False, npts=2000
     s = np.linspace(0, s_a, npts)[1:]
     Ue = np.maximum(Sf(s), 1e-6); dUe = Sf(s, 1)
     R = np.maximum(Rs(s), 1e-9); dR = Rs(s, 1)
+    global E_MAX, TH_INF_MAX
+    E_MAX = 0.0; TH_INF_MAX = 0.0
     th, H, sep_f, itr = march(s, Ue, dUe, R, dR, nu, transition)
+    E_fix = E_MAX; TH_fix = TH_INF_MAX
     out = dict(sep_avancorpo=None if sep_f is None else float(Xs(s[sep_f]) / L),
                x_trans=float(Xs(s[min(itr, len(s) - 1)]) / L), larghezza_presa=float(w))
     if sep_f is not None:           # distacco prima della presa: forma non valida
@@ -193,6 +202,7 @@ def power(x, r, ReV, transition, xs_frac, Q, x_end=None, detail=False, npts=2000
     Ue_s, r_a = Ue[iend], R[iend]
     # energia persa dallo strato limite fino all'imbocco della presa
     E_tot = 0.5 * Ue_s**3 * Hstar(H) * th * 2 * np.pi * r_a     # ρ = 1
+    E_tot = max(E_tot, E_fix)        # CORREZIONE (revisione): il difetto di energia non puo' calare
     # portata dello strato limite misurata a monte, fuori dall'accelerazione
     # locale verso la presa (è l'aria che arriverà alla presa)
     x_q = max(0.05, xs_frac - w / 2 - max(0.05, 2 * w)) * L
@@ -203,8 +213,13 @@ def power(x, r, ReV, transition, xs_frac, Q, x_end=None, detail=False, npts=2000
     # ingestione parziale: se Q < Q_BL entra solo la frazione phi dello strato
     # limite; il resto prosegue sulla coda (niente penalità a gradino)
     phi = min(1.0, Q / max(Q_BL, 1e-12))
-    E_ing = phi * E_tot
-    th_res = (1 - phi) * th                 # deficit residuo, per unità di perimetro
+    if PHI_MODE == "profilo" and phi < 1.0:   # la presa prende lo strato interno (profilo a potenza, n = nq)
+        e_ = (nq / (nq + 1) * phi - nq / (nq + 3) * phi ** ((nq + 3) / (nq + 1))) / (2 * nq / ((nq + 1) * (nq + 3)))
+        m_ = (nq / (nq + 1) * phi - nq / (nq + 2) * phi ** ((nq + 2) / (nq + 1))) / (nq / ((nq + 1) * (nq + 2)))
+    else:
+        e_ = m_ = phi
+    E_ing = e_ * E_tot
+    th_res = (1 - m_) * th                  # deficit residuo, per unità di perimetro
     # --- coda a valle del fan: immersa nel getto, che la mantiene attaccata.
     #     Resistenza = attrito turbolento di lastra piana alla velocità del getto
     #     sulla superficie bagnata fino alla stazione di Young (come il corpo
@@ -212,6 +227,7 @@ def power(x, r, ReV, transition, xs_frac, Q, x_end=None, detail=False, npts=2000
     x_end = axi.X_END if x_end is None else x_end
     xa0, xa1 = b + we * L, x_end * L
     D_res = 0.5 * 4 * np.pi * r_a * th_res * Ue_s ** ((H + 5) / 2)
+    D_res = max(D_res, 0.5 * 4 * np.pi * (1 - m_) * TH_fix)   # CORREZIONE (revisione 11/11): neanche il deficit puo' calare
     sep_c = None
     if xa1 > xa0:
         xx = np.linspace(xa0, xa1, 200)

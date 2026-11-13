@@ -1,5 +1,36 @@
 # Changes to the technical note
 
+## Code release v1.4.0 (corrections to the reduced-order model, 2026-11-13)
+
+Found by two independent reviews of the code; the conclusions of the note are qualitatively unchanged, several
+numbers change. The previous files are kept; the new results have the suffix `_v4`.
+
+1. `bli.py`, kinetic-energy defect: the model intake is a wall sink that accelerates the flow just ahead of it, and
+   Head's closure lost 3-5% of the defect there, which the kinetic-energy integral equation forbids
+   (d/ds(r Ue^3 delta_3) >= 0). The largest value along the forebody is now used.
+2. `bli.py`, momentum deficit of the boundary layer that is not ingested (Young's wake drag): same correction.
+3. `bli.py`, new switch `PHI_MODE`: "lineare" (default; the intake takes a uniform fraction of the boundary layer,
+   as before) or "profilo" (the intake takes only the inner layer; defect fractions from a power-law profile).
+4. `axi.py`, e^N transition criterion: now Drela and Giles (1987), dn/ds = dn/dRe_theta(H) (m(H)+1)/2 l(H) / theta.
+   Before, the actual dRe_theta/ds was used, which is the same on a flat plate but not on a body whose radius
+   grows. Flat-plate transition Re_x at Tu 0.05/0.1/0.3/1%: 2.66e6/1.98e6/1.11e6/4.40e5. This changes the
+   natural-transition results (shape robustness, `robusta_v4.py`), not the turbulent ones.
+5. New main result: break-even duct loss K* with the propulsor added to the optimal conventional body, only intake
+   position and flow rate optimised (`stesso_corpo.py`, exact zero of the lower envelope, no random seeds):
+   4.8-2.3% (whole boundary layer ingested) and 9.1-4.7% (inner layer only) for Re_V 3e5-1e8; ideal saving
+   16.3-12.7%.
+6. The body re-optimised together with the propulsor (`soglia_v4.py`, 7 values of K, three seeds; `fascia_K.py`
+   takes the mid-point between the interpolated zero and the envelope of the optimised designs, `inviluppo.py`)
+   gives K* 6.4-3.3% and 11.7-6.7% and an ideal saving of 20.0-16.5%, but with a short body whose afterbody behind
+   the intake closes at 29-36 degrees; the model counts only friction there (no pressure drag, no separation),
+   so these values are an upper estimate. At Re_V 1e8 (whole boundary layer) one seed finds a much shorter body
+   exploiting the same assumption; the slender family gives 3.3%.
+7. Reduced model on the RANS body (`rivista_navale.py`, `rivista_navale.py profilo`): 7.1-8.1% (whole) and
+   13.0-13.1% (inner layer only) against 8.2% in RANS; 13.2-13.5% with Q = Q_BL.
+8. Goldschmied validation re-run: 0.01725 against 0.02132 (-19%), unchanged.
+9. Ducted case on three grids with self-propulsion balanced to |T-D| < 0.1% (`misura_griglie.py`): +8.7, +8.9,
+   +8.9% against the ideal propeller (the values quoted in the note, +9.2% for cowl (d), are balanced to 0.3%).
+
 ## Code release v1.3.0 (journal version, 2026-10-10, doi:10.5281/zenodo.23281153)
 
 New script `rivista_navale.py` (output `out/rivista_navale.json`) for the version submitted to Ocean

@@ -18,11 +18,17 @@ D3  Modello ridotto (bli.py) sullo STESSO corpo dei RANS (ottimo turbolento a Re
     con e senza la penalita' geometrica, e con Q = Q_BL (tutto lo strato limite ingerito).
 
 uso: python rivista_navale.py      -> out/rivista_navale.json
+     python rivista_navale.py profilo   (D3 con l'ingestione del solo strato interno, bli.PHI_MODE)
+                                        -> out/rivista_navale_profilo.json
 """
-import json
+import json, sys
 import numpy as np
 import misura_carena as mc
 import axi, bli
+
+PROFILO = len(sys.argv) > 1 and sys.argv[1] == "profilo"
+if PROFILO:
+    bli.PHI_MODE = "profilo"
 
 prof = json.load(open("out/cfd_profili.json"))["conv_1e6f"]
 xL = np.array(prof["x"]) / prof["x"][-1]; rL = np.array(prof["r"]) / prof["x"][-1]
@@ -82,4 +88,4 @@ for r in D3:
           f"(penalita' {r['penalita_su_Cconv']:.1f}% di C_conv); con Q = Q_BL {r['risparmio_QBL_senza_penalita']:.1f}%"
           f"  (RANS disco libero: 8.2%)")
 json.dump(dict(D1=D1, w_nominale=w_nom, w_nominale_piani=[1 - v for v in u_piani], D3=D3),
-          open("out/rivista_navale.json", "w"), indent=1)
+          open("out/rivista_navale_profilo.json" if PROFILO else "out/rivista_navale.json", "w"), indent=1)

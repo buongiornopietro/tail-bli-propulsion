@@ -29,6 +29,8 @@ def caso(args):
     _ao.PENDENZA_MAX = PENDENZA_MAX
     axi.CRITERIO = "eN"          # criterio di transizione e^N (Drela-Giles)
     axi.REX_MAX = 1e12           # nessun tetto artificiale: decide e^N
+    if len(args) > 5 and args[5] == "michel":   # 10/11/2026: ramo di Michel della figura 4 (REX_MAX di default di axi)
+        axi.CRITERIO = "michel"; axi.REX_MAX = 5e6
     tag = f"Re{Re:.0e}_{reg}" + (f"_seme{seed}" if seed else "") + (f"_{args[4]}" if len(args) > 4 else "")
     fn = f"out/soglia_{tag}.json"
     if os.path.exists(fn):

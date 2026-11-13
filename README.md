@@ -27,18 +27,22 @@ the note (translation table in `en_fig.py`), e.g. `FIG_EN=1 python plot_axi.py`.
 |---|---|---|---|
 | Fig. 1, 2D drag at Re = 200 | `python plot.py 200` | `out/*_Re200.json/.npz` | `out/resistenza_Re200.png`, `out/scie_Re200.png` |
 | Fig. 3, axisymmetric optima | `python plot_axi.py` | `out/axi_risultati.json` | `out/ottimo_3D.png` |
-| Fig. 4, K* map | `python plot_mappa_finale.py` | `out/soglia_Re*.json`, `out/v3/` (Michel criterion) | `out/mappa_finale.png` |
+| Fig. 4, K* map (v1.4.0) | `python plot_mappa_v4.py` | `out/stesso_corpo_v4.json`, `out/fascia_K_v4.json` | `out/mappa_finale_v4_en.png` |
+| K* band of the re-optimised body (v1.4.0) | `python fascia_K.py` | `out/soglia_Re*_v4*.json` (three seeds, `inviluppo.py` bounds) | `out/fascia_K_v4.json` |
+| Fig. 4, K* map (v1.3.0 and earlier) | `python plot_mappa_finale.py` | `out/soglia_Re*.json`, `out/v3/` (Michel criterion) | `out/mappa_finale.png` |
 | Fig. 5, RANS vs reduced model | `python plot_cfd.py cfd/conv_1e6f/risultati conv_1e6f "<title>"` | `cfd/conv_1e6f/` | `out/cfd_conv_1e6f.png` |
 | Fig. 6, tail flow | `python plot_carena.py` | `cfd/disco_A`, `cfd/carena_D` | `out/carena_flusso.png` |
 | Slot intake loss K | `python misura_K.py cfd/gold_v2 cfd/K_006 cfd/K_024` | `cfd/gold_v2`, `cfd/K_*` | `out/misura_K.json` |
 | Free disc / ducted intake, budget table | `python misura_carena.py` | `cfd/disco_A`, `cfd/carena_D` | `out/misura_carena.json` |
 | Grid table | `python misura_fine.py` | `cfd/disco_fine`, `cfd/carena_fine2` | `out/misura_fine.json` (see also `out/griglia.txt`) |
 | Reference-propeller table | `python confronto_elica.py` | `out/misura_carena.json`, `out/misura_fine.json` | `out/confronto_elica.json` |
-| Fig. 2, "guaranteed" shape | `python plot_robusta.py` | `out/robusta.json` | `out/robusta.png` |
+| Fig. 2, "guaranteed" shape (v1.4.0) | `FIG_EN=1 python plot_robusta_v4.py` | `out/robusta_v4.json` | `out/robusta_v4_en.png` |
+| Fig. 2, "guaranteed" shape (v1.3.0 and earlier) | `python plot_robusta.py` | `out/robusta.json` | `out/robusta.png` |
 | Version 3: Delft comparison (wake energy) | `python delft_confronto.py` | `cfd/conv_ref` | `out/delft_confronto.json` |
 | Version 3: cowls (e)-(g), coarse grid, Re x10 | `python misura_v3.py` | `cfd/v3_*` | `out/misura_v3.json` |
 | Version 3: iterative drift of the drag | `python deriva_v3.py v3_conv_rada v3_conv_re7 ...` | `cfd/v3_*/postProcessing/forze` | printed |
-| Journal version: naval quantities (t, w_T, eta_H, eta_O, eta_D), reduced model on the RANS body | `python rivista_navale.py` | `out/cfd_profili.json`, `out/misura_carena.json`, `out/misura_v3.json`, `cfd/conv_ref` | `out/rivista_navale.json` |
+| Ducted case on three grids, self-propulsion balanced to \|T-D\| < 0.1% (v1.4.0) | `python misura_griglie.py ...` (see docstring) | RANS cases not in the repository | `out/nota1_griglie/nota1_griglie_misura_bilanciata.json` |
+| Journal version: naval quantities (t, w_T, eta_H, eta_O, eta_D), reduced model on the RANS body (`profilo`: inner layer only) | `python rivista_navale.py [profilo]` | `out/cfd_profili.json`, `out/misura_carena.json`, `out/misura_v3.json`, `cfd/conv_ref` | `out/rivista_navale.json` |
 
 Checked on 2026-09-24: the four measurement scripts reproduce the saved JSON files exactly,
 and the figures above are regenerated from the saved data.
@@ -50,9 +54,12 @@ Full recomputation (hours to days on a 4-core PC):
 | 2D shape optimisation (not used in the note: coarser lattice) | `python opt.py 8`, then `python plot_opt.py` | `out/opt_storia.json`, `out/ottimizzazione.png` |
 | 2D drag of each shape | `python lbm.py <shape> 200` | `out/<shape>_Re200.json` |
 | Shape table | `python axi_opt.py` | `out/axi_risultati.json` |
-| K* table | `python soglia.py` (all Re); `python soglia.py ripeti 1e7 forzata` (repeatability) | `out/soglia_*.json`, `out/soglia_tutti.json` |
-| Goldschmied validation | `python valida_goldschmied.py` | `out/valida_goldschmied.json` |
-| "Guaranteed" shape | `python robusta.py` | `out/robusta.json` |
+| K* on the same conventional body (v1.4.0, main result) | `python stesso_corpo.py out . out/stesso_corpo_v4.json` (about 40 min) | `out/stesso_corpo_v4.json` |
+| K* of the re-optimised body (v1.4.0) | `python soglia_v4.py` (48 optimisations, about 13 h) | `out/soglia_Re*_v4*.json` |
+| K* table (v1.3.0 and earlier) | `python soglia.py` (all Re); `python soglia.py ripeti 1e7 forzata` (repeatability) | `out/soglia_*.json`, `out/soglia_tutti.json` |
+| Goldschmied validation | `python valida_goldschmied.py` | `out/valida_goldschmied.json` (v1.4.0 result: `out/valida_goldschmied_v4.json`) |
+| "Guaranteed" shape (v1.4.0) | `python robusta_v4.py` | `out/robusta_v4.json` |
+| "Guaranteed" shape (v1.3.0 and earlier) | `python robusta.py` | `out/robusta.json` |
 
 RANS cases (OpenFOAM 14):
 
